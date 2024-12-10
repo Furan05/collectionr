@@ -1,8 +1,21 @@
 # db/seeds.rb
-
+require 'faker'
 # Nettoyage de la base de données existante
 puts "Cleaning database..."
 Card.destroy_all
+User.destroy_all
+
+puts "Create User"
+User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456")
+10.times do
+  user = User.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    password: "password"
+  )
+  puts "Created user: #{user.first_name}"
+end
 
 # Création des cartes
 puts "Creating cards..."

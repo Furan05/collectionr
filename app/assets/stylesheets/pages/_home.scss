@@ -1,1 +1,72 @@
 // Specific CSS for your home-page
+.container-home {
+  .hero {
+    display: flex;
+    padding: 5% 5%;
+    gap: 2rem;
+    align-items: center;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.hero-content p {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.features {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 5%;
+}
+
+.feature-card {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h2 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .features {
+        flex-direction: column;
+    }
+}
+}
