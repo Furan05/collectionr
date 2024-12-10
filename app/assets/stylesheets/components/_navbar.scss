@@ -21,7 +21,7 @@ body {
   align-items: center;
   padding: 1rem 5%;
   background-color: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 1px rgb(255, 194, 26);
 }
 
 
@@ -74,7 +74,11 @@ body {
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 1rem; // Ajoute de l'espace entre les éléments
+  gap: 2rem; // Ajoute de l'espace entre les éléments
+}
+
+.user-icon {
+  font-size: 24px
 }
 
 .login-btn {
@@ -130,6 +134,21 @@ body {
 }
 
 .logo-collectionr {
-  height: 70px; // Augmenter la hauteur
+  height: 75px; // Augmenter la hauteur
   width: auto; // Maintenir le ratio d'aspect
+  padding-left: 75px;
+}
+
+.logo {
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05) rotate(5deg);
+  filter: brightness(1.1);
+}
+
+
+.logo:hover img {
+  filter: drop-shadow(0 2px 4px rgba(254, 93, 0, 0.3));
 }
