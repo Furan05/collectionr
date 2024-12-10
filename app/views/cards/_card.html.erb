@@ -1,16 +1,19 @@
 <% card_info = PokemonTcgService.new.get_card_info(card.tcg_id) %>
 <div class="card">
-  <% if card_info %>
-    <h2><%= card_info["name"] %></h2>
-    <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
-    <div class="card-details">
-      <p>Set: <%= card_info["set"]["name"] %></p>
-      <p>Rarity: <%= card_info["rarity"] %></p>
-      <% if card_info["tcgplayer"] && card_info["tcgplayer"]["prices"] %>
-        <p>Market Price: $<%= card_info["tcgplayer"]["prices"]["holofoil"]&.dig("market") %></p>
-      <% end %>
-    </div>
-  <% else %>
-    <p>Impossible de charger les informations pour <%= card.name %></p>
+  <%= link_to card_path(card) do %>
+    <% if card_info %>
+      <h2><%= card_info["name"] %></h2>
+      <div class="card-img" data-tilt data-tilt-startX="20" data-tilt-reset-to-start="true" data-tilt-glare data-tilt-max-glare="0.8">
+        <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
+      </div>
+      <div class="card-details">
+        <p>Set: <%= card_info["set"]["name"] %></p>
+        <p>Rarity: <%= card_info["rarity"] %></p>
+        <% if card_info["tcgplayer"] && card_info["tcgplayer"]["prices"] %>
+          <p>Market Price: $<%= card_info["tcgplayer"]["prices"]["holofoil"]&.dig("market") %></p>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.js" integrity="sha512-0eckjEcIDNlyXFNRAL2Kecw71G5Df+nI2kazjvQrH/DZEHYOdy0UnP0gAlQGZMq4ZOOHpc2eYG15N3JZDA6pGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

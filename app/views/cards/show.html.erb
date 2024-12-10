@@ -1,0 +1,81 @@
+<div class="card-detail-container">
+  <div class="card-info">
+    <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.4">
+      <img src="<%= @card_info["images"]["large"] %>" alt="<%= @card_info["name"] %>">
+    </div>
+
+    <div class="card-stats">
+      <h1><%= @card_info["name"] %></h1>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>Set</h3>
+          <p><%= @card_info["set"]["name"] %></p>
+        </div>
+
+        <div class="stat-item">
+          <h3>Rarity</h3>
+          <p><%= @card_info["rarity"] %></p>
+        </div>
+
+        <div class="stat-item">
+          <h3>Artist</h3>
+          <p><%= @card_info["artist"] %></p>
+        </div>
+
+        <div class="stat-item">
+          <h3>Number</h3>
+          <p><%= @card_info["number"] %>/<%= @card_info["set"]["total"] %></p>
+        </div>
+      </div>
+
+      <% if @card_info["attacks"] %>
+        <div class="attacks">
+          <h3>Attacks</h3>
+          <% @card_info["attacks"].each do |attack| %>
+            <div class="attack">
+              <h4><%= attack["name"] %></h4>
+              <p><%= attack["text"] %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="price-history">
+    <h2>Price History</h2>
+    <canvas id="priceChart"></canvas>
+  </div>
+</div>
+
+<%# Ajout de Chart.js %>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('priceChart');
+  const priceData = <%= raw @price_history.to_json %>;
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: priceData.map(d => d.date),
+      datasets: [{
+        label: 'Card Price (€)',
+        data: priceData.map(d => d.price),
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+});
+</script>

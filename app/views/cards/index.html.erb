@@ -1,5 +1,33 @@
-<div class="cards-container">
-  <% @cards.each do |card| %>
-    <%= render 'card', card: card %>
-  <% end %>
+<div class="cards-page">
+  <h1 class="main-title">Nos cards du moment</h1>
+
+  <div class="search-container">
+    <%= form_with(url: cards_path, method: :get, class: "search-form") do |f| %>
+      <div class="search-input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <%= f.text_field :query, placeholder: "Trouver une carte ?", class: "search-input" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="tabs">
+    <%= link_to "Pokemon", "#", class: "tab active", data: { tab: "pokemon" } %>
+    <%= link_to "Yu-gi-ho", "#", class: "tab", data: { tab: "yugiho" } %>
+  </div>
+
+  <div class="cards-grid">
+    <% @cards.each do |card| %>
+      <% card_info = PokemonTcgService.new.get_card_info(card.tcg_id) %>
+      <div class="card-item">
+        <%= link_to card_path(card), class: "card-link" do %>
+          <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+            <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
+          </div>
+          <div class="card-name">
+            <%= card_info["name"] %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
