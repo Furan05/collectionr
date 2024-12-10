@@ -1,12 +1,51 @@
-.navbar-lewagon {
+:root {
+  --primary-color: #FF8F3F;
+  --text-color: #333;
+  --background-color: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+.navbar {
+  display: flex;
   justify-content: space-between;
-  background: white;
+  align-items: center;
+  padding: 1rem 5%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.logo img {
+  height: 40px;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.nav-links {
+  display: flex;
+  gap: 2rem;
 }
+
+.nav-item {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.login-btn {
+  background: linear-gradient(45deg, #FF8F3F, #FFB067);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
