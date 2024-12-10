@@ -1,12 +1,14 @@
     <nav class="navbar">
         <div class="logo">
           <%# fait moi une récupération de mon logo dans mon assets iamge %>
+          <%= link_to root_path do %>
              <%= image_tag 'logo_collectionr.png', alt: 'Logo', class: "logo-collectionr" %>
+          <% end %>
         </div>
         <div class="nav-links">
-            <a href="#" class="nav-item">Home</a>
-            <a href="#" class="nav-item">Collection</a>
-            <a href="#" class="nav-item">Card</a>
+          <%= link_to "Home", root_path, class: "nav-item" %>
+          <a href="#" class="nav-item">Collection</a>
+          <%= link_to "Card", cards_index_path, class: "nav-item" %>
         </div>
         <div class="nav-buttons">
            <% if current_user %>
