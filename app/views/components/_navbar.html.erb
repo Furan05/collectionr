@@ -1,16 +1,16 @@
     <nav class="navbar">
-        <div class="logo">
-          <%# fait moi une récupération de mon logo dans mon assets iamge %>
-          <%= link_to root_path do %>
-             <%= image_tag 'logo_collectionr.png', alt: 'Logo', class: "logo-collectionr" %>
-          <% end %>
-        </div>
-        <div class="nav-links">
-          <%= link_to "Home", root_path, class: "nav-item" %>
-          <a href="#" class="nav-item">Collection</a>
-          <%= link_to "Card", cards_index_path, class: "nav-item" %>
-        </div>
-        <div class="nav-buttons">
+  <div class="logo">
+    <%# fait moi une récupération de mon logo dans mon assets iamge %>
+    <%= link_to root_path do %>
+      <%= image_tag 'logo_collectionr.png', alt: 'Logo', class: "logo-collectionr" %>
+    <% end %>
+  </div>
+  <div class="nav-links">
+    <%= link_to "Home", root_path, class: "nav-item" %>
+    <%= link_to "Collection", collections_path, class: "nav-item" %>
+    <%= link_to "Card", cards_index_path, class: "nav-item" %>
+  </div>
+  <div class="nav-buttons">
     <% if current_user %>
       <%= link_to 'LOGOUT', destroy_user_session_path, data: { turbo_method: :delete }, class: 'login-btn' %>
       <%= link_to profile_user_path(current_user) do %>
@@ -20,4 +20,4 @@
       <%= link_to 'LOGIN', new_user_session_path, class: 'login-btn' %>
     <% end %>
   </div>
-    </nav>
+</nav>

@@ -88,7 +88,25 @@ cards = [
 ]
 
 Card.create!(cards)
+begin
+  # Get all cards from Sword & Shield set
+  sword_shield_cards = Pokemon::Card.where(q: 'set.id:swsh1')
 
+  sword_shield_cards.each do |card|
+    Card.create!(
+      name: card.name,
+      tcg: "pokemon",
+      tcg_id: card.id,
+      image: card.images.small,
+      set: card.set.name
+    )
+    print "." # Progress indicator
+  end
+
+  puts "\nCreated #{sword_shield_cards.count} Sword & Shield cards!"
+rescue => e
+  puts "Error fetching Sword & Shield cards: #{e.message}"
+end
 puts "Created #{Card.count} cards!"
 
 

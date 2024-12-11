@@ -1,0 +1,17 @@
+<main class="show-collection">
+  <h1 class="collection-title"><%= @collection.title %></h1>
+
+  <div class="cards-grid">
+    <% @set_cards.each do |card| %>
+      <div class="card-item">
+        <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+          <img src="<%= card.image %>" alt="<%= card.name %>">
+        </div>
+        <div class="card-info">
+          <h3 class="card-title"><%= card.name %></h3>
+          <p class="card-set"><%= card.set %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</main>

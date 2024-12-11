@@ -1,11 +1,11 @@
 <div class="sets-container">
   <% @sets.each do |set| %>
-
     <div class="set-card">
       <!-- Logo du set -->
       <p><%= set.title %></p>
-      <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
-
+      <%= link_to collection_path(set) do %>
+        <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
+      <% end %>
       <!-- Nom et date de sortie -->
     </div>
   <% end %>
