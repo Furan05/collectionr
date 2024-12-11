@@ -1,0 +1,64 @@
+/* SCSS pour styliser la page des collections Pokémon */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.sets-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Espacement entre les cartes */
+  padding: 20px;
+}
+
+.set-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animation au survol */
+}
+
+.set-card:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Ombre plus marquée */
+}
+
+.set-card img {
+  max-width: auto; /* Image responsive */
+}
+
+.set-card h2 {
+    font-size :1 rem
+}
+
+/* Responsive pour petits écrans */
+@media (max-width:600){
+}
+
+.set-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden; /* Empêche tout dépassement du contenu */
+}
+
+.set-card img {
+  max-width: 100%; /* L'image ne dépasse pas la largeur de la carte */
+  height: auto; /* Maintient le ratio de l'image */
+  object-fit: contain; /* S'assure que l'image reste entièrement visible */
+}

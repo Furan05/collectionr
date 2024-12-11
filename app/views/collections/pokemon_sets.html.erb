@@ -1,0 +1,25 @@
+<div class="sets">
+  <h1>Pokémon TCG Sets</h1>
+  <% if @sets.present? %>
+    <div class="sets-container">
+      <% @sets.each do |set| %>
+        <div class="set-card">
+          <!-- Logo du set -->
+          <img src="<%= set.images.logo %>" alt="<%= set.name %>" />
+          <!-- Nom du set -->
+          <h2><%= set.name %></h2>
+          <!-- Date de sortie -->
+          <p>Released:
+  <% if set.release_date.present? %>
+    <%= Date.parse(set.release_date).strftime('%d/%m/%Y') rescue 'Invalid date' %>
+  <% else %>
+    Unknown
+  <% end %>
+</p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No sets available.</p>
+  <% end %>
+</div>

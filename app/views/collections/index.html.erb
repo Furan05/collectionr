@@ -1,0 +1,33 @@
+<div class="collections">
+  <!-- Section Pokémon -->
+  <div class="collection-category">
+    <h2>Pokémon</h2>
+    <div class="collection-items">
+      <% @pokemon_collections.each do |collection| %>
+        <div class="collection-item">
+          <a href="<%= collection_path(collection) %>">
+            <img src="<%= collection.image_url %>" alt="<%= collection.name %>">
+            <p><%= collection.name %></p>
+            <p>Released: <%= collection.release_date.strftime('%d/%m/%Y') if collection.release_date %></p>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Section Yu-Gi-Oh -->
+  <div class="collection-category">
+    <h2>Yu-Gi-Oh</h2>
+    <div class="collection-items">
+      <% @yugioh_collections.each do |collection| %>
+        <div class="collection-item">
+          <a href="<%= collection_path(collection) %>">
+            <img src="<%= collection.image_url %>" alt="<%= collection.name %>">
+            <p><%= collection.name %></p>
+            <p>Released: <%= collection.release_date.strftime('%d/%m/%Y') if collection.release_date %></p>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

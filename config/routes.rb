@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :cards, only: [:index]
+  get "/collections/pokemon_sets", to: "collections#pokemon_sets", as: "pokemon_sets"
 
-end
+  # resources :collections
+  # get "/collections/pokemon", to: "pages#pokemon_collections", as: "pokemon_collections"
+  end

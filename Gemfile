@@ -76,3 +76,4 @@ group :test do
 end
 
 gem "httparty", "~> 0.22.0"
+gem 'pokemon_tcg_sdk'
