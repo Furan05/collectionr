@@ -1,0 +1,12 @@
+<div class="sets-container">
+  <% @sets.each do |set| %>
+    <div class="set-card">
+      <!-- Logo du set -->
+      <img src="<%= set.images.logo %>" alt="<%= set.name %>" class="set-logo" />
+
+      <!-- Nom et date de sortie -->
+      <h2><%= set.name %></h2>
+      <p>Released: <%= Date.parse(set.release_date).strftime('%d/%m/%Y') rescue 'Unknown' %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,39 @@
+/* Conteneur principal */
+.sets-container {
+  display: flex;
+  flex-wrap: wrap; /* Permet d'aller à la ligne sur les petits écrans */
+  justify-content: center; /* Centre les cartes horizontalement */
+  gap: 20px; /* Espacement entre les cartes */
+  padding: 20px;
+}
+
+/* Style des cartes */
+.set-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  text-align: center; /* Centre le contenu à l'intérieur de la carte */
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animation au survol */
+
+  width: 300px; /* Largeur fixe pour toutes les cartes */
+}
+
+.set-card:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+}
+
+/* Style des images */
+.set-logo {
+  max-width: 100%; /* Image responsive */
+  height: auto; /* Conserve le ratio d'aspect */
+}
+
+/* Titre et texte */
+.set-card h2 {
+  font-size: 1.2rem;
+}
+
+.set-card p {
+  font-size: 1rem;
+}
