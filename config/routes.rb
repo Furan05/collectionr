@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
+  get 'users/profile'
   get 'cards/index'
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+
+  resources :users, only: [] do
+    get 'profile', on: :member
+  end
+  
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
