@@ -12,8 +12,11 @@
       <h1><%= @card_info["name"] %></h1>
 
       <div class="price-history">
-        <h2>Évolution des prix</h2>
-        <canvas id="priceChart"></canvas>
+        <h2>Price History</h2>
+        <canvas data-controller="chart"
+                data-price-history="<%= @price_history.to_json %>"
+                id="priceChart">
+        </canvas>
       </div>
 
       <div class="stats-grid">
@@ -83,69 +86,3 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('priceChart');
-    const priceData = <%= raw @price_history.to_json %>;
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: priceData.map(d => d.date),
-        datasets: [{
-          label: 'Prix de la carte (€)',
-          data: priceData.map(d => d.price),
-          borderColor: '#f8c471',
-          backgroundColor: 'rgba(248, 196, 113, 0.1)',
-          borderWidth: 2,
-          tension: 0.4,
-          fill: true,
-          pointRadius: 0,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#f8c471',
-          pointHoverBorderColor: '#fff',
-          pointHoverBorderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: false,
-            grid: {
-              display: false
-            },
-            ticks: {
-              font: {
-                size: 12
-              }
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              font: {
-                size: 12
-              },
-              maxTicksLimit: 6,
-              maxRotation: 0
-            }
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index'
-        }
-      }
-    });
-  });
-  </script>
