@@ -2,8 +2,12 @@
 require 'faker'
 # Nettoyage de la base de données existante
 puts "Cleaning database..."
-Card.destroy_all
+Collection.destroy_all
+puts "Collections destroyed"
 User.destroy_all
+puts "Users destroyed"
+Card.destroy_all
+puts "Cards destroyed"
 
 puts "Create User"
 User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456")
@@ -86,3 +90,18 @@ cards = [
 Card.create!(cards)
 
 puts "Created #{Card.count} cards!"
+
+
+# Récupérer le set Sword & Shield
+sword = Pokemon::Set.all.find { |set| set.id == "swsh1" }
+
+# Créer une collection pour chaque utilisateur
+User.all.each do |user|
+  Collection.create!(
+    title: sword.name,
+    user_id: user.id,
+    image_url: sword.images.logo
+  )
+end
+
+puts "Created #{Collection.count} collections for #{User.count} users!"
