@@ -11,6 +11,14 @@
     <div class="card-stats">
       <h1><%= @card_info["name"] %></h1>
 
+      <div class="price-history">
+        <h2>Price History</h2>
+        <canvas data-controller="chart"
+                data-price-history="<%= @price_history.to_json %>"
+                id="priceChart">
+        </canvas>
+      </div>
+
       <div class="stats-grid">
         <% if @card.tcg == "pokemon" %>
           <div class="stat-item">
@@ -75,39 +83,6 @@
       <% end %>
     </div>
   </div>
-
-  <div class="price-history">
-    <h2>Price History</h2>
-    <canvas id="priceChart"></canvas>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const ctx = document.getElementById('priceChart');
-  const priceData = <%= raw @price_history.to_json %>;
-
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: priceData.map(d => d.date),
-      datasets: [{
-        label: 'Card Price (€)',
-        data: priceData.map(d => d.price),
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: false
-        }
-      }
-    }
-  });
-});
-</script>
