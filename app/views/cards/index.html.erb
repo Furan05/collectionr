@@ -15,19 +15,37 @@
     <%= link_to "Yu-gi-ho", "#", class: "tab", data: { tab: "yugiho" } %>
   </div>
 
-  <div class="cards-grid">
-    <% @cards.each do |card| %>
-      <% card_info = PokemonTcgService.new.get_card_info(card.tcg_id) %>
-      <div class="card-item">
-        <%= link_to card_path(card), class: "card-link" do %>
-          <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
-            <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
-          </div>
-          <div class="card-name">
-            <%= card_info["name"] %>
+  <%= turbo_frame_tag "cards_list" do %>
+    <div class="cards-grid">
+      <% @cards.each do |card| %>
+        <%= turbo_frame_tag dom_id(card), loading: :lazy do %>
+          <div class="card-item">
+            <% card_info = Rails.cache.fetch("card_info_#{card.id}", expires_in: 6.hours) do %>
+              <% service = TcgService.new(card.tcg) %>
+              <% service.get_card_info(card.tcg_id) %>
+            <% end %>
+
+            <% if card_info.present? %>
+              <%= link_to card_path(card), class: "card-link", data: { turbo_frame: "_top" } do %>
+                <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                  <% if card.tcg == "pokemon" %>
+                    <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
+                  <% elsif card.tcg == "yugiho" %>
+                    <img src="<%= card_info["card_images"][0]["image_url"] %>" alt="<%= card_info["name"] %>">
+                  <% end %>
+                </div>
+                <div class="card-name">
+                  <%= card_info["name"] %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="card-placeholder">
+                Chargement...
+              </div>
+            <% end %>
           </div>
         <% end %>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

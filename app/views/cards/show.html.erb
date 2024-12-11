@@ -1,7 +1,11 @@
 <div class="card-detail-container">
   <div class="card-info">
     <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.4">
-      <img src="<%= @card_info["images"]["large"] %>" alt="<%= @card_info["name"] %>">
+      <% if @card.tcg == "pokemon" %>
+        <img src="<%= @card_info["images"]["large"] %>" alt="<%= @card_info["name"] %>">
+      <% elsif @card.tcg == "yugiho" %>
+        <img src="<%= @card_info["card_images"][0]["image_url"] %>" alt="<%= @card_info["name"] %>">
+      <% end %>
     </div>
 
     <div class="card-stats">
@@ -13,28 +17,52 @@
       </div>
 
       <div class="stats-grid">
-        <div class="stat-item">
-          <h3>Set</h3>
-          <p><%= @card_info["set"]["name"] %></p>
-        </div>
+        <% if @card.tcg == "pokemon" %>
+          <div class="stat-item">
+            <h3>Set</h3>
+            <p><%= @card_info["set"]["name"] %></p>
+          </div>
 
-        <div class="stat-item">
-          <h3>Rarity</h3>
-          <p><%= @card_info["rarity"] %></p>
-        </div>
+          <div class="stat-item">
+            <h3>Rarity</h3>
+            <p><%= @card_info["rarity"] %></p>
+          </div>
 
-        <div class="stat-item">
-          <h3>Artist</h3>
-          <p><%= @card_info["artist"] %></p>
-        </div>
+          <div class="stat-item">
+            <h3>Artist</h3>
+            <p><%= @card_info["artist"] %></p>
+          </div>
 
-        <div class="stat-item">
-          <h3>Number</h3>
-          <p><%= @card_info["number"] %>/<%= @card_info["set"]["total"] %></p>
-        </div>
+          <div class="stat-item">
+            <h3>Number</h3>
+            <p><%= @card_info["number"] %>/<%= @card_info["set"]["total"] %></p>
+          </div>
+        <% elsif @card.tcg == "yugiho" %>
+          <div class="stat-item">
+            <h3>Type</h3>
+            <p><%= @card_info["type"] %></p>
+          </div>
+
+          <div class="stat-item">
+            <h3>Race</h3>
+            <p><%= @card_info["race"] %></p>
+          </div>
+
+          <div class="stat-item">
+            <h3>Archetype</h3>
+            <p><%= @card_info["archetype"] || "N/A" %></p>
+          </div>
+
+          <% if @card_info["atk"].present? %>
+            <div class="stat-item">
+              <h3>ATK/DEF</h3>
+              <p><%= @card_info["atk"] %>/<%= @card_info["def"] %></p>
+            </div>
+          <% end %>
+        <% end %>
       </div>
 
-      <% if @card_info["attacks"] %>
+      <% if @card.tcg == "pokemon" && @card_info["attacks"] %>
         <div class="attacks">
           <h3>Attacks</h3>
           <% @card_info["attacks"].each do |attack| %>
@@ -44,12 +72,16 @@
             </div>
           <% end %>
         </div>
+      <% elsif @card.tcg == "yugiho" %>
+        <div class="description">
+          <h3>Description</h3>
+          <p><%= @card_info["desc"] %></p>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
 
-<%# Ajout de Chart.js %>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
