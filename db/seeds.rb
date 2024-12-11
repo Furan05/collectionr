@@ -75,7 +75,12 @@ cards = [
     name: "Venusaur & Snivy-GX",
     tcg: "pokemon",
     tcg_id: "sm12-1"
-  }
+  },
+  {
+    name: "Tornado Dragon",
+    tcg: "yugiho",
+    tcg_id: "6983839"
+  },
 ]
 
 Card.create!(cards)
