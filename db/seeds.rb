@@ -2,12 +2,15 @@
 require 'faker'
 # Nettoyage de la base de données existante
 puts "Cleaning database..."
+# Destroy in correct order - children first
+CollectionType.destroy_all
+puts "Collection Types destroyed"
 Collection.destroy_all
 puts "Collections destroyed"
-User.destroy_all
-puts "Users destroyed"
 Card.destroy_all
 puts "Cards destroyed"
+User.destroy_all
+puts "Users destroyed"
 
 puts "Create User"
 User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456")
