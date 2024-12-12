@@ -1,2 +1,30 @@
-<h1>Users#profile</h1>
-<p>Find me in app/views/users/profile.html.erb</p>
+<div class="profile-header">
+  <h1>My Collection Stats</h1>
+  <div class="total-cards">
+    <h2>Total Cards: <%= @total_cards %></h2>
+  </div>
+</div>
+
+<div class="tcg-section">
+  <h2 class="tcg-title">Recent Cards</h2>
+  <div class="cards-container">
+    <% @recent_cards.each do |card| %>
+      <%= render 'cards/card', card: card %>
+    <% end %>
+  </div>
+</div>
+
+<div class="tcg-section">
+  <h2 class="tcg-title">Cards by Set</h2>
+  <div class="sets-container">
+    <% @cards_by_set.each do |set_name, count| %>
+      <div class="set-card">
+        <h3><%= set_name %></h3>
+        <div class="set-count">
+          <span class="count-number"><%= count %></span>
+          <span class="count-label">cards</span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

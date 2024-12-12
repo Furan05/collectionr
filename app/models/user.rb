@@ -8,4 +8,20 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   has_many :collections
+  has_many :collection_types, through: :collections
+  has_many :cards, through: :collection_types
+
+  def total_cards_count
+    collection_types.count
+  end
+
+  def recent_cards
+    cards.select('DISTINCT ON (cards.id) cards.*, collection_types.created_at')
+         .order('cards.id, collection_types.created_at DESC')
+         .limit(5)
+  end
+
+  def cards_by_set
+    cards.group(:set).count
+  end
 end
