@@ -1,5 +1,6 @@
 # app/controllers/cards_controller.rb
 class CardsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index]
   def index
     @cards = if params[:query].present?
       Card.where("name ILIKE ?", "%#{params[:query]}%")

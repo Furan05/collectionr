@@ -120,26 +120,114 @@ User.all.each do |user|
     title: sword.name,
     user_id: user.id,
     image_url: sword.images.logo,
-    tcg: "pokemon"  # Added tcg field
+    tcg: "pokemon",
+    release_date: sword.release_date  # Added tcg field
   )
   Collection.create!(
     title: base1.name,
     user_id: user.id,
     image_url: base1.images.logo,
-    tcg: "pokemon"  # Added tcg field
+    tcg: "pokemon",
+    release_date: base1.release_date  # Added tcg field
   )
   Collection.create!(
     title: sv8.name,
     user_id: user.id,
     image_url: sv8.images.logo,
-    tcg: "pokemon"  # Added tcg field
+    tcg: "pokemon",
+    release_date: sv8.release_date  # Added tcg field
   )
   Collection.create!(
     title: neo1.name,
     user_id: user.id,
     image_url: neo1.images.logo,
-    tcg: "pokemon"  # Added tcg field
+    tcg: "pokemon",
+    release_date: neo1.release_date  # Added tcg field
   )
 end
 
 puts "Created #{Collection.count} collections for #{User.count} users!"
+
+puts "Creating YuGiOh collections and cards..."
+
+# YuGiOh sets data
+yugioh_sets = [
+  {
+    name: "Legend of Blue Eyes White Dragon",
+    set_code: "LOB",
+    release_date: "2002-03-08"
+  },
+  {
+    name: "Metal Raiders",
+    set_code: "MRD",
+    release_date: "2002-06-26"
+  },
+  {
+    name: "Dawn of Majesty",
+    set_code: "DAMA",
+    release_date: "2021-08-12"
+  },
+  {
+    name: "2022 Tin of the Pharaoh's Gods",
+    set_code: "MP22",
+    release_date: "2022-09-14"
+  }
+]
+
+# Fetch all YuGiOh sets data first
+puts "Fetching YuGiOh sets data..."
+sets_response = HTTParty.get("https://db.ygoprodeck.com/api/v7/cardsets.php")
+
+if sets_response.success?
+  all_sets = JSON.parse(sets_response.body)
+
+  User.all.each do |user|
+    puts "\nCreating collections for user: #{user.email}"
+
+    yugioh_sets.each do |set_data|
+      # Find matching set from API response
+      api_set = all_sets.find { |s| s["set_name"] == set_data[:name] }
+
+      if api_set
+        collection = Collection.create!(
+          title: set_data[:name],
+          user: user,
+          image_url: api_set["set_image"],
+          tcg: "yugiho",
+          release_date: set_data[:release_date]
+        )
+        puts "Created collection: #{collection.title}"
+
+        # Fetch cards for this set
+        cards_response = HTTParty.get("https://db.ygoprodeck.com/api/v7/cardinfo.php",
+          query: { cardset: set_data[:name] }
+        )
+
+        if cards_response.success?
+          cards_data = JSON.parse(cards_response.body)["data"]
+
+          cards_data.each do |card_data|
+            card = Card.where(
+              tcg_id: card_data["id"].to_s,
+              tcg: "yugiho"
+            ).first_or_create!(
+              name: card_data["name"],
+              image: card_data["card_images"][0]["image_url"],
+              set: set_data[:name]
+            )
+            print "."
+          end
+          puts "\nCreated/linked #{cards_data.length} cards for #{set_data[:name]}!"
+        else
+          puts "Error fetching cards for #{set_data[:name]}: #{cards_response.code}"
+        end
+      else
+        puts "Set not found in API: #{set_data[:name]}"
+      end
+    end
+  end
+else
+  puts "Failed to fetch YuGiOh sets data: #{sets_response.code}"
+end
+
+puts "\nSeeding completed!"
