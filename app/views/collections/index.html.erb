@@ -1,12 +1,27 @@
-<div class="sets-container">
-  <% @sets.each do |set| %>
-    <div class="set-card">
-      <!-- Logo du set -->
-      <p><%= set.title %></p>
-      <%= link_to collection_path(set) do %>
-        <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
-      <% end %>
-      <!-- Nom et date de sortie -->
-    </div>
-  <% end %>
+<div class="tcg-section">
+  <h2 class="tcg-title">Pokemon Sets</h2>
+  <div class="sets-container">
+    <% @pokemon_sets.each do |set| %>
+      <div class="set-card">
+        <p><%= set.title %></p>
+        <%= link_to collection_path(set) do %>
+          <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="tcg-section">
+  <h2 class="tcg-title">Yu-Gi-Oh Sets</h2>
+  <div class="sets-container">
+    <% @yugioh_sets.each do |set| %>
+      <div class="set-card">
+        <p><%= set.title %></p>
+        <%= link_to collection_path(set) do %>
+          <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
