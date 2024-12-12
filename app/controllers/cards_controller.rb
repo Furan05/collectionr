@@ -48,6 +48,7 @@ class CardsController < ApplicationController
     control_points = [0, 7, 15, 22, 30].map do |day|
       progress = day / 30.0
       variation = trend * progress
+      price = base_price * (1 + variation)
       # Ajoute une petite variation aléatoire à chaque point de contrôle
       price * (1 + rand(-0.05..0.05))
     end
