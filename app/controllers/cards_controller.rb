@@ -11,7 +11,7 @@ class CardsController < ApplicationController
     @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
 
     # Paginate with 16 cards per page
-    @cards = @cards.page(params[:page]).per(24)
+    @cards = @cards.page(params[:page]).per(16)
 
     respond_to do |format|
       format.html
@@ -24,7 +24,6 @@ class CardsController < ApplicationController
     service = TcgService.new(@card.tcg)
     @card_info = service.get_card_info(@card.tcg_id)
     @price_history = generate_price_history(@card_info) || []
-  end
 
   private
 
@@ -48,6 +47,7 @@ class CardsController < ApplicationController
     control_points = [0, 7, 15, 22, 30].map do |day|
       progress = day / 30.0
       variation = trend * progress
+      price = base_price * (1 + variation)
       # Ajoute une petite variation aléatoire à chaque point de contrôle
       price * (1 + rand(-0.05..0.05))
     end
