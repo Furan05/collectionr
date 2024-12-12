@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
-  }, sign_out_via: [:get, :delete] 
+  }, sign_out_via: [:get, :delete]
 
   # Root route
   root to: "pages#home"
@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   end
 
   # Card routes
-  resources :cards, only: [:index, :show]
+  resources :cards, only: [:index, :show] do
+    resources :favorites, only: [:create, :destroy]
+  end
 
   # Collection routes
   resources :collections do

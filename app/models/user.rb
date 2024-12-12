@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :collections
   has_many :collection_types, through: :collections
   has_many :cards, through: :collection_types
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_cards, through: :favorites, source: :card
 
   def total_cards_count
     collection_types.count
