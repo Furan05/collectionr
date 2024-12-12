@@ -7,6 +7,7 @@
         <%= link_to collection_path(set) do %>
           <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
         <% end %>
+        <p class="release-date">Released: <%= set.release_date if set.release_date %></p>
       </div>
     <% end %>
   </div>
@@ -21,6 +22,7 @@
         <%= link_to collection_path(set) do %>
           <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
         <% end %>
+        <p class="release-date">Released: <%= set.release_date.strftime("%B %d, %Y") if set.release_date %></p>
       </div>
     <% end %>
   </div>
