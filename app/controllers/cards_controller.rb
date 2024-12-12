@@ -1,7 +1,5 @@
 # app/controllers/cards_controller.rb
 class CardsController < ApplicationController
-  # before_action :set_tcg_service
-
   def index
     @cards = if params[:query].present?
       Card.where("name ILIKE ?", "%#{params[:query]}%")
@@ -9,24 +7,24 @@ class CardsController < ApplicationController
       Card.all
     end
 
+    # Filter by TCG type if specified
+    @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
     @cards = @cards.limit(20)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
- # app/controllers/cards_controller.rb
- def show
-  @card = Card.find(params[:id])
-  service = TcgService.new(@card.tcg)
-  @card_info = service.get_card_info(@card.tcg_id)
-
-  # Initialiser @price_history avec un tableau vide par défaut
-  @price_history = generate_price_history(@card_info) || []
-end
+  def show
+    @card = Card.find(params[:id])
+    service = TcgService.new(@card.tcg)
+    @card_info = service.get_card_info(@card.tcg_id)
+    @price_history = generate_price_history(@card_info) || []
+  end
 
   private
-
-  # def set_tcg_service
-  #   @tcg_service ||= TcgService.instance(params[:tcg] || 'yugiho')
-  # end
 
   def generate_price_history(card_info)
     return [] unless card_info
