@@ -6,13 +6,24 @@
       <div class="search-input-wrapper">
         <i class="fas fa-search search-icon"></i>
         <%= f.text_field :query, placeholder: "Trouver une carte ?", class: "search-input" %>
+        <%= f.hidden_field :tcg, value: params[:tcg] if params[:tcg].present? %>
       </div>
     <% end %>
   </div>
 
-  <div class="tabs">
-    <%= link_to "Pokemon", "#", class: "tab active", data: { tab: "pokemon" } %>
-    <%= link_to "Yu-gi-ho", "#", class: "tab", data: { tab: "yugiho" } %>
+  <div class="tabs" data-controller="tabs">
+    <%= link_to "Pokemon", cards_path(tcg: "pokemon"),
+        class: "tab #{params[:tcg] == 'pokemon' || params[:tcg].nil? ? 'active' : ''}",
+        data: {
+          tab: "pokemon",
+          action: "click->tabs#switch"
+        } %>
+    <%= link_to "Yu-gi-ho", cards_path(tcg: "yugiho"),
+        class: "tab #{params[:tcg] == 'yugiho' ? 'active' : ''}",
+        data: {
+          tab: "yugiho",
+          action: "click->tabs#switch"
+        } %>
   </div>
 
   <%= turbo_frame_tag "cards_list" do %>
@@ -20,27 +31,12 @@
       <% @cards.each do |card| %>
         <%= turbo_frame_tag dom_id(card), loading: :lazy do %>
           <div class="card-item">
-            <% card_info = Rails.cache.fetch("card_info_#{card.id}", expires_in: 6.hours) do %>
-              <% service = TcgService.new(card.tcg) %>
-              <% service.get_card_info(card.tcg_id) %>
-            <% end %>
-
-            <% if card_info.present? %>
-              <%= link_to card_path(card), class: "card-link", data: { turbo_frame: "_top" } do %>
-                <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
-                  <% if card.tcg == "pokemon" %>
-                    <img src="<%= card_info["images"]["small"] %>" alt="<%= card_info["name"] %>">
-                  <% elsif card.tcg == "yugiho" %>
-                    <img src="<%= card_info["card_images"][0]["image_url"] %>" alt="<%= card_info["name"] %>">
-                  <% end %>
-                </div>
-                <div class="card-name">
-                  <%= card_info["name"] %>
-                </div>
-              <% end %>
-            <% else %>
-              <div class="card-placeholder">
-                Chargement...
+            <%= link_to card_path(card), class: "card-link", data: { turbo_frame: "_top" } do %>
+              <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                <img src="<%= card.image %>" alt="<%= card.name %>">
+              </div>
+              <div class="card-name">
+                <%= card.name %>
               </div>
             <% end %>
           </div>
