@@ -11,7 +11,7 @@ class CardsController < ApplicationController
     @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
 
     # Paginate with 16 cards per page
-    @cards = @cards.page(params[:page]).per(16)
+    @cards = @cards.page(params[:page]).per(24)
 
     respond_to do |format|
       format.html
@@ -24,6 +24,7 @@ class CardsController < ApplicationController
     service = TcgService.new(@card.tcg)
     @card_info = service.get_card_info(@card.tcg_id)
     @price_history = generate_price_history(@card_info) || []
+  end
 
   private
 
