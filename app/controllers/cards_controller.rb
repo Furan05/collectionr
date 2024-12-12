@@ -1,4 +1,3 @@
-# app/controllers/cards_controller.rb
 class CardsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
   def index
@@ -10,7 +9,9 @@ class CardsController < ApplicationController
 
     # Filter by TCG type if specified
     @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
-    @cards = @cards.limit(20)
+
+    # Paginate with 16 cards per page
+    @cards = @cards.page(params[:page]).per(24)
 
     respond_to do |format|
       format.html
@@ -47,7 +48,6 @@ class CardsController < ApplicationController
     control_points = [0, 7, 15, 22, 30].map do |day|
       progress = day / 30.0
       variation = trend * progress
-      price = base_price * (1 + variation)
       # Ajoute une petite variation aléatoire à chaque point de contrôle
       price * (1 + rand(-0.05..0.05))
     end
