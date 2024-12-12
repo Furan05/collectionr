@@ -1,0 +1,11 @@
+<%= turbo_stream.replace dom_id(@card) do %>
+ <div class="card-item <%= 'not-owned' unless has_card %>"
+     data-controller="card-collection"
+     data-action="click->card-collection#addCard"
+     data-card-id="<%= card.id %>"
+     data-collection-id="<%= collection.id %>">
+    <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+      <img src="<%= @card.image %>" alt="<%= @card.name %>">
+    </div>
+  </div>
+<% end %>
