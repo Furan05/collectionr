@@ -1,0 +1,9 @@
+<div id="<%= dom_id(card) %>"
+     class="card-item"
+     data-card-collection-target="card"
+     data-card-id="<%= card.id %>"
+     data-collection-id="<%= collection.id %>">
+  <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+    <img src="<%= card.image %>" alt="<%= card.name %>">
+  </div>
+</div>

@@ -78,34 +78,60 @@ h1 {
       color: #2d3436;
   }
 
+  .collection-stats {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #2d3436;
+  }
+
   .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 2rem;
-      padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); // 5 cards per row
+    gap: 2rem;
+    padding: 1rem;
+    max-width: 1600px; // Adjust based on card width and gap
+    margin: 0 auto;
   }
 
-  .card {
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
+  /* Card item styles */
+  .card-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
 
-  .card:hover {
+    &:hover {
       transform: translateY(-5px);
+    }
+
+    &.not-owned {
+      filter: grayscale(100%);
+      opacity: 0.7;
+      transform: none !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      .card-image {
+        pointer-events: none;
+      }
+    }
   }
 
+  /* Card content */
   .card-image {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      background: #2d3436;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 
   .card-info {
-      padding: 1rem;
+    padding: 1rem;
   }
 
   .card-title {

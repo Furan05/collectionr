@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   get "/collections", to: "collections#index", as: "collections"
 
   resources :collections, only: [:show]
+  resources :collections do
+    resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }
+  end
 
 
   # Defines the root path route ("/")
