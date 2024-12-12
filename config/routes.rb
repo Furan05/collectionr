@@ -14,8 +14,9 @@ Rails.application.routes.draw do
   end
 
   # Card routes
-  resources :cards, only: [:index, :show]
-  resources :favorites, only: [:create, :destroy]
+  resources :cards, only: [:index, :show] do
+    resources :favorites, only: [:create, :destroy]
+  end
 
   # Collection routes
   resources :collections do

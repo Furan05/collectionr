@@ -1,9 +1,18 @@
 <%= turbo_stream.replace dom_id(@card) do %>
- <div class="card-item <%= 'not-owned' unless has_card %>"
-     data-controller="card-collection"
-     data-action="click->card-collection#addCard"
-     data-card-id="<%= card.id %>"
-     data-collection-id="<%= collection.id %>">
+  <div class="card-item <%= 'not-owned' unless has_card %>"
+       data-controller="card-collection"
+       data-card-id="<%= @card.id %>"
+       data-collection-id="<%= @collection.id %>">
+
+    <div class="favorite-btn">
+      <%= button_to card_favorite_path(@card),
+          method: :delete,
+          class: "favorite-heart active",
+          form: { data: { turbo_frame: dom_id(@card) } } do %>
+        <i class="fas fa-heart"></i>
+      <% end %>
+    </div>
+
     <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
       <img src="<%= @card.image %>" alt="<%= @card.name %>">
     </div>

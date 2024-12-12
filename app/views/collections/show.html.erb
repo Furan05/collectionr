@@ -15,14 +15,14 @@
 
   <div class="favorite-btn">
     <% if current_user.favorites.exists?(card_id: card.id) %>
-      <%= button_to favorite_path(card_id: card.id),
+      <%= button_to card_favorite_path(card_id: card.id),
           method: :delete,
           class: "favorite-heart active",
           form: { data: { turbo_frame: dom_id(card) } } do %>
         <i class="fas fa-heart"></i>
       <% end %>
     <% else %>
-      <%= button_to favorites_path(card_id: card.id),
+      <%= button_to card_favorites_path(card_id: card.id),
           method: :post,
           class: "favorite-heart",
           form: { data: { turbo_frame: dom_id(card) } } do %>
