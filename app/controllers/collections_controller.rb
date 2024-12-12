@@ -1,7 +1,7 @@
 class CollectionsController < ApplicationController
   def index
     @pokemon_sets = Collection.where(user: current_user, tcg: "pokemon")
-    @yugioh_sets = Collection.where(user: current_user, tcg: "yugioh")
+    @yugioh_sets = Collection.where(user: current_user, tcg: "yugiho")
   end
 
   def show

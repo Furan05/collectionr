@@ -1,32 +1,26 @@
 Rails.application.routes.draw do
-  get 'users/profile'
-  get 'cards/index'
+  # Devise routes with custom controllers
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
-  }
+  }, sign_out_via: [:get, :delete] 
 
+  # Root route
+  root to: "pages#home"
+
+  # User routes
   resources :users, only: [] do
     get 'profile', on: :member
   end
 
-  root to: "pages#home"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Card routes
+  resources :cards, only: [:index, :show]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-  get "/collections", to: "collections#index", as: "collections"
-
-  resources :collections, only: [:show]
+  # Collection routes
   resources :collections do
     resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }
   end
 
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-  resources :cards, only: [:index]
-  resources :cards, only: [:index, :show]
-
+  # Health check
+  get "up" => "rails/health#show", as: :rails_health_check
 end
