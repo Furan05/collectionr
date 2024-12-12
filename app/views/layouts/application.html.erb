@@ -7,8 +7,9 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-      <%= javascript_importmap_tags %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%# Supprimer cette ligne qui cause l'erreur %>
+    <%#= javascript_include_tag "application", "data-turbo-track": "reload" %>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -20,5 +21,5 @@
     <%= yield %>
     <%= render "components/flash" %>
   </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.js" integrity="sha512-0eckjEcIDNlyXFNRAL2Kecw71G5Df+nI2kazjvQrH/DZEHYOdy0UnP0gAlQGZMq4ZOOHpc2eYG15N3JZDA6pGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.js"></script>
 </html>
