@@ -9,22 +9,41 @@
     <% @set_cards.each do |card| %>
       <%= turbo_frame_tag dom_id(card) do %>
         <div class="card-item <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>"
-             data-card-collection-target="card"
-             data-card-id="<%= card.id %>"
-             data-collection-id="<%= @collection.id %>">
-          <% unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>
-            <%= button_to '+',
-    collection_collection_types_path(@collection),
-    params: { card_id: card.id },
-    class: 'add-card-btn',
-    form: {
-      data: {
-        turbo_stream: true,
-        turbo_frame: dom_id(card)
-      }
-    }
-%>
-          <% end %>
+     data-card-collection-target="card"
+     data-card-id="<%= card.id %>"
+     data-collection-id="<%= @collection.id %>">
+
+  <div class="favorite-btn">
+    <% if current_user.favorites.exists?(card_id: card.id) %>
+      <%= button_to favorite_path(card_id: card.id),
+          method: :delete,
+          class: "favorite-heart active",
+          form: { data: { turbo_frame: dom_id(card) } } do %>
+        <i class="fas fa-heart"></i>
+      <% end %>
+    <% else %>
+      <%= button_to favorites_path(card_id: card.id),
+          method: :post,
+          class: "favorite-heart",
+          form: { data: { turbo_frame: dom_id(card) } } do %>
+        <i class="far fa-heart"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>
+    <%= button_to '+',
+        collection_collection_types_path(@collection),
+        params: { card_id: card.id },
+        class: 'add-card-btn',
+        form: {
+          data: {
+            turbo_stream: true,
+            turbo_frame: dom_id(card)
+          }
+        }
+    %>
+  <% end %>
           <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
             <img src="<%= card.image %>" alt="<%= card.name %>">
           </div>

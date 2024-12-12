@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   has_many :collections
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_cards, through: :favorites, source: :card
 end
