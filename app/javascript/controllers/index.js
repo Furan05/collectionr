@@ -4,4 +4,3 @@ import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
-import CardCollectionController from "controllers/card_collection_controller"
