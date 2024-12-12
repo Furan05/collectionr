@@ -70,3 +70,51 @@ h1 {
     }
 }
 }
+
+.show-collection {
+    .collection-title {
+      margin: 2rem 0;
+      font-size: 2rem;
+      color: #2d3436;
+  }
+
+  .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2rem;
+      padding: 1rem;
+  }
+
+  .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .card:hover {
+      transform: translateY(-5px);
+  }
+
+  .card-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #2d3436;
+  }
+
+  .card-info {
+      padding: 1rem;
+  }
+
+  .card-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+  }
+
+  .card-hp {
+      color: #e17055;
+      font-weight: bold;
+  }
+}
