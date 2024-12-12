@@ -1,0 +1,18 @@
+<%= turbo_stream.update "cards_list" do %>
+  <div class="cards-grid">
+    <% @cards.each do |card| %>
+      <%= turbo_frame_tag dom_id(card), loading: :lazy do %>
+        <div class="card-item">
+          <%= link_to card_path(card), class: "card-link", data: { turbo_frame: "_top" } do %>
+            <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+              <img src="<%= card.image %>" alt="<%= card.name %>">
+            </div>
+            <div class="card-name">
+              <%= card.name %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
