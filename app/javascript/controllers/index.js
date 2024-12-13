@@ -10,6 +10,10 @@ application.register("card-collection", CardCollectionController)
 import DropdownController from "./dropdown_controller"
 application.register("dropdown", DropdownController)
 
+import TabsController from "./tabs_controller"
+application.register("tabs", TabsController)
+
+
 import ChartController from "./chart_controller"
 application.register("chart", ChartController)
 
@@ -20,5 +24,5 @@ application.register("drop", DropController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import TabsController from "./tabs_controller"
-application.register("tabs", TabsController)
+import OngletController from "./onglet_controller"
+application.register("onglet", OngletController)

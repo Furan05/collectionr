@@ -1,30 +1,129 @@
-<div class="profile-header">
-  <h1>My Collection Stats</h1>
-  <div class="total-cards">
-    <h2>Total Cards: <%= @total_cards %></h2>
-  </div>
-</div>
+<%# app/views/users/profile.html.erb %>
+<div class="profile-container">
+  <div class="profile-sidebar">
+    <div class="user-info">
+      <div class="user-avatar">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=1234567" alt="avatar">
+      </div>
+      <h2><%= current_user.first_name %> <%= current_user.last_name %></h2>
+      <p class="user-handle">@<%= current_user.email.split('@').first %></p>
 
-<div class="tcg-section">
-  <h2 class="tcg-title">Recent Cards</h2>
-  <div class="cards-container">
-    <% @recent_cards.each do |card| %>
-      <%= render 'cards/card', card: card %>
-    <% end %>
-  </div>
-</div>
-
-<div class="tcg-section">
-  <h2 class="tcg-title">Cards by Set</h2>
-  <div class="sets-container">
-    <% @cards_by_set.each do |set_name, count| %>
-      <div class="set-card">
-        <h3><%= set_name %></h3>
-        <div class="set-count">
-          <span class="count-number"><%= count %></span>
-          <span class="count-label">cards</span>
+      <div class="user-stats">
+        <div class="stat">
+          <span class="stat-value"><%= @total_cards %></span>
+          <span class="stat-label">Cards</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value"><%= @cards_by_set.count %></span>
+          <span class="stat-label">Sets</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value"><%= @favorite_cards.count %></span>
+          <span class="stat-label">Favorites</span>
         </div>
       </div>
-    <% end %>
+    </div>
+
+    <div class="quick-stats">
+      <div class="completion-rate">
+        <div class="completion-header">
+          <h3>Collection Progress</h3>
+          <span class="percentage"><%= @collection_progress %>%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" style="width: <%= @collection_progress %>%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-main">
+    <div class="content-tabs" data-controller="onglet">
+      <a href="#activity"
+         class="tab active"
+         data-onglet-target="tab"
+         data-action="click->onglet#switch">
+        Recent Activity
+      </a>
+      <a href="#collections"
+         class="tab"
+         data-onglet-target="tab"
+         data-action="click->onglet#switch">
+        Collections
+      </a>
+      <a href="#favorites"
+         class="tab"
+         data-onglet-target="tab"
+         data-action="click->onglet#switch">
+        Favorites
+      </a>
+    </div>
+
+    <div id="activity" class="tab-content" data-onglet-target="content">
+      <div class="content-section">
+        <h3>Recent Additions</h3>
+        <div class="recent-cards">
+          <% @recent_cards.each do |card| %>
+            <div class="card-preview">
+              <img src="<%= card.image %>" alt="<%= card.name %>">
+              <div class="card-info">
+                <h4><%= card.name %></h4>
+                <p><%= card.set %></p>
+                <span class="timestamp">Added <%= time_ago_in_words(card.created_at) %> ago</span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="collections" class="tab-content hidden" data-onglet-target="content">
+      <div class="content-section">
+        <div class="section-header">
+          <h3>Sets Progress</h3>
+        </div>
+        <div class="sets-grid">
+          <% @sets_progress.each do |set| %>
+            <div class="set-overview">
+              <div class="set-info">
+                <h4><%= set[:name] %></h4>
+                <div class="set-stats">
+                  <span class="count"><%= set[:owned] %>/<%= set[:total] %> cards</span>
+                  <div class="completion">
+                    <div class="completion-bar" style="width: <%= set[:progress] %>%"></div>
+                  </div>
+                  <span class="percentage"><%= set[:progress] %>%</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="favorites" class="tab-content hidden" data-onglet-target="content">
+      <div class="content-section">
+        <h3>Favorite Cards</h3>
+        <div class="favorites-grid">
+          <% @favorite_cards.each do |card| %>
+            <div class="favorite-card">
+              <div class="favorite-actions">
+                <%= button_to card_favorite_path(card),
+                    method: :delete,
+                    class: "remove-favorite",
+                    form: { data: { turbo_confirm: "Remove from favorites?" } } do %>
+                  <i class="fas fa-heart"></i>
+                <% end %>
+              </div>
+              <img src="<%= card.image %>" alt="<%= card.name %>">
+              <div class="card-info">
+                <h4><%= card.name %></h4>
+                <p><%= card.set %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
