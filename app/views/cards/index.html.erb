@@ -1,3 +1,4 @@
+<%# app/views/cards/index.html.erb %>
 <div class="cards-page">
   <h1 class="main-title">Nos cards du moment</h1>
 
@@ -12,13 +13,13 @@
   </div>
 
   <div class="tabs" data-controller="tabs">
-    <%= link_to "Pokemon", cards_path(tcg: "pokemon"),
+    <%= link_to "Pokemon", "#",
         class: "tab #{params[:tcg] == 'pokemon' || params[:tcg].nil? ? 'active' : ''}",
         data: {
           tab: "pokemon",
           action: "click->tabs#switch"
         } %>
-    <%= link_to "Yu-gi-ho", cards_path(tcg: "yugiho"),
+    <%= link_to "Yu-gi-ho", "#",
         class: "tab #{params[:tcg] == 'yugiho' ? 'active' : ''}",
         data: {
           tab: "yugiho",
@@ -26,26 +27,7 @@
         } %>
   </div>
 
-  <%= turbo_frame_tag "cards_list" do %>
-    <div class="cards-grid">
-      <% @cards.each do |card| %>
-        <%= turbo_frame_tag dom_id(card), loading: :lazy do %>
-          <div class="card-item">
-            <%= link_to card_path(card), class: "card-link", data: { turbo_frame: "_top" } do %>
-              <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
-                <img src="<%= card.image %>" alt="<%= card.name %>">
-              </div>
-              <div class="card-name">
-                <%= card.name %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <div class="pagination">
-    <%= paginate @cards %>
+  <div id="cards_list">
+    <%= render "cards/list", cards: @cards %>
   </div>
 </div>

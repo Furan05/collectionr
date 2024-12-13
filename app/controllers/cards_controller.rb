@@ -1,23 +1,26 @@
 class CardsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
-  def index
-    @cards = if params[:query].present?
-      Card.where("name ILIKE ?", "%#{params[:query]}%")
-    else
-      Card.all
-    end
+# app/controllers/cards_controller.rb
+def index
+  @cards = Card.all
 
-    # Filter by TCG type if specified
-    @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
+  # Filter by TCG type
+  @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
 
-    # Paginate with 16 cards per page
-    @cards = @cards.page(params[:page]).per(24)
+  # Then apply search if present
+  @cards = @cards.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
 
-    respond_to do |format|
-      format.html
-      format.turbo_stream
+  # Paginate with 24 cards per page
+  @cards = @cards.page(params[:page]).per(24)
+
+  respond_to do |format|
+    format.html
+    format.turbo_stream do
+      render turbo_stream: turbo_stream.update("cards_list", partial: "cards/list", locals: { cards: @cards })
     end
   end
+end
+
 
   def show
     @card = Card.find(params[:id])

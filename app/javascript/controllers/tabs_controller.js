@@ -1,18 +1,13 @@
+// app/javascript/controllers/tabs_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["tab"]
-
-  connect() {
-    const activeTab = this.element.querySelector('.active')
-    if (activeTab) {
-      this.updateCards(activeTab.dataset.tab)
-    }
-  }
+  static targets = ["tabContent"]
 
   switch(event) {
     event.preventDefault()
     const tab = event.currentTarget
+    const tcg = tab.dataset.tab
 
     // Remove active class from all tabs
     this.element.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
@@ -20,14 +15,20 @@ export default class extends Controller {
     // Add active class to clicked tab
     tab.classList.add('active')
 
-    this.updateCards(tab.dataset.tab)
-  }
-
-  updateCards(tcg) {
+    // Update the URL without triggering a full page reload
     const url = new URL(window.location)
     url.searchParams.set('tcg', tcg)
+    window.history.pushState({}, '', url)
 
-    // Use Turbo to update the cards list
-    Turbo.visit(url.toString(), { frame: "cards_list" })
+    // Make a fetch request to get the filtered cards
+    fetch(`${window.location.pathname}?tcg=${tcg}`, {
+      headers: {
+        'Accept': 'text/vnd.turbo-stream.html'
+      }
+    })
+    .then(response => response.text())
+    .then(html => {
+      Turbo.renderStreamMessage(html)
+    })
   }
 }
