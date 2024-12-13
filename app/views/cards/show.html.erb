@@ -12,7 +12,7 @@
       <h1><%= @card_info["name"] %></h1>
 
       <div class="price-history">
-        <h2>Price History</h2>
+        <h2><i class='bx bx-line-chart' ></i> Évolution du prix (30j)</h2>
         <canvas id="priceChart"></canvas>
       </div>
 
@@ -20,22 +20,22 @@
       <div class="stats-grid">
         <% if @card.tcg == "pokemon" %>
           <div class="stat-item">
-            <h3>Set</h3>
+            <h3><i class='bx bx-list-ul' ></i> Set</h3>
             <p><%= @card_info["set"]["name"] %></p>
           </div>
 
           <div class="stat-item">
-            <h3>Rarity</h3>
+            <h3><i class='bx bxs-bolt'></i> Rarity</h3>
             <p><%= @card_info["rarity"] %></p>
           </div>
 
           <div class="stat-item">
-            <h3>Artist</h3>
+            <h3><i class='bx bx-paint' ></i> Artist</h3>
             <p><%= @card_info["artist"] %></p>
           </div>
 
           <div class="stat-item">
-            <h3>Number</h3>
+            <h3><i class='bx bx-radio-circle' ></i> Number</h3>
             <p><%= @card_info["number"] %>/<%= @card_info["set"]["total"] %></p>
           </div>
         <% elsif @card.tcg == "yugiho" %>
@@ -65,7 +65,7 @@
 
       <% if @card.tcg == "pokemon" && @card_info["attacks"] %>
         <div class="attacks">
-          <h3>Attacks</h3>
+          <h3><i class='bx bx-bolt-circle' ></i> Attacks</h3>
           <% @card_info["attacks"].each do |attack| %>
             <div class="attack">
               <h4><%= attack["name"] %></h4>
