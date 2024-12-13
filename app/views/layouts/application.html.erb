@@ -19,7 +19,7 @@
   </head>
 
   <body>
-    <%= render "components/navbar" %>
+    <%= render "components/navbar", data: {controller: "hello"} %>
     <%= yield %>
     <%= render "components/flash" %>
   </body>
