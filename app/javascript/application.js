@@ -3,9 +3,6 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "@popperjs/core"
 import "bootstrap"
-
 // Custom components
-import "card-collection"
-import "index"
 
 window.VanillaTilt = VanillaTilt

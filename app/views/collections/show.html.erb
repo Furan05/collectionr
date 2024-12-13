@@ -18,14 +18,23 @@
       <%= button_to card_favorite_path(card_id: card.id),
           method: :delete,
           class: "favorite-heart active",
-          form: { data: { turbo_frame: dom_id(card) } } do %>
+          form: {
+          data: {
+            turbo: true,
+          }
+        } do %>
         <i class="fas fa-heart"></i>
       <% end %>
     <% else %>
       <%= button_to card_favorites_path(card_id: card.id),
-          method: :post,
-          class: "favorite-heart",
-          form: { data: { turbo_frame: dom_id(card) } } do %>
+    method: :post,
+    class: "favorite-heart",
+    form: {
+    data: {
+      turbo: true,
+      controller: "favorite"
+    }
+  } do %>
         <i class="far fa-heart"></i>
       <% end %>
     <% end %>
@@ -36,11 +45,11 @@
         collection_collection_types_path(@collection),
         params: { card_id: card.id },
         class: 'add-card-btn',
-        form: {
-          data: {
+        form: {data: {
             turbo_stream: true,
             turbo_frame: dom_id(card)
           }
+
         }
     %>
   <% end %>

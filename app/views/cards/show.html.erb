@@ -13,7 +13,11 @@
 
       <div class="price-history">
         <h2><i class='bx bx-line-chart' ></i> Évolution du prix (30j)</h2>
-        <canvas id="priceChart"></canvas>
+        <h2>Price History</h2>
+        <canvas data-controller="chart"
+              data-chart-price-history-value="<%= @price_history.to_json %>"
+              id="priceChart">
+        </canvas>
       </div>
 
 
@@ -82,69 +86,3 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const priceData = <%= raw @price_history.to_json %>;
-    const ctx = document.getElementById('priceChart').getContext('2d');
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: priceData.map(item => item.date),
-        datasets: [{
-          label: 'Prix de la carte (€)',
-          data: priceData.map(item => item.price),
-          borderColor: '#f8c471',
-          backgroundColor: 'rgba(248, 196, 113, 0.1)',
-          borderWidth: 2,
-          tension: 0.4,
-          fill: true,
-          pointRadius: 0,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#f8c471',
-          pointHoverBorderColor: '#fff',
-          pointHoverBorderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: false
-            },
-            ticks: {
-              font: {
-                size: 12
-              }
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              font: {
-                size: 12
-              },
-              maxTicksLimit: 6,
-              maxRotation: 0
-            }
-          }
-        },
-        interaction: {
-          intersect: false,
-          mode: 'index'
-        }
-      }
-    });
-  });
-</script>

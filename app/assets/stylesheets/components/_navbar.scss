@@ -24,30 +24,65 @@
 
 body {
   background-color: var(--background-color);
+  margin-top: 70px;
+}
+
+
+
+.logo {
+  justify-self: start;
+  transition: all 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05) rotate(5deg);
+  filter: brightness(1.1);
+}
+.logo:hover img {
+  filter: drop-shadow(0 2px 4px rgba(254, 93, 0, 0.3));
+}
+
+.logo-collectionr {
+  height: 75px;
+  width: auto;
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 1rem 5%;
-  background-color: white;
-  box-shadow: 0 1px 1px rgb(255, 194, 26);
+  height: 980x;
+  padding: 0 5%;
+  background-color: rgba(255, 255, 255, 0.8); // Add transparency
+  backdrop-filter: blur(10px);  // Add blur effect
+  -webkit-backdrop-filter: blur(10px); // For Safari support
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1); // Subtle shadow
 }
 
+.logo-collectionr {
+  height: 60px;
+  width: auto;
+}
 
 .nav-links {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav-item {
   text-decoration: none;
   color: #333;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   position: relative;
-  padding: 0.5rem 0;
   transition: color 0.3s ease;
 }
 
@@ -56,7 +91,7 @@ body {
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: 0;
+  bottom: -5px;
   left: 50%;
   background: linear-gradient(45deg, #F8B622, #FE5D00);
   transition: width 0.3s ease, left 0.3s ease, opacity 0.3s ease;
@@ -64,32 +99,43 @@ body {
   transform: translateX(-50%);
 }
 
-.nav-item:hover {
-  color: #FE5D00;
-}
-
 .nav-item:hover::after {
   width: 100%;
   opacity: 1;
 }
 
-.nav-item.active {
-  color: #FE5D00;
-}
-
-.nav-item.active::after {
-  width: 100%;
-  opacity: 1;
+.user-profile {
+  justify-self: end;
 }
 
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 2rem; // Ajoute de l'espace entre les éléments
+  gap: 2rem;
+}
+
+.login-btn {
+  background: linear-gradient(45deg, #F8B622, #FE5D00);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(248, 182, 34, 0.3);
+  text-decoration: none;
 }
 
 .user-icon {
-  font-size: 24px
+  font-size: 24px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .login-btn {
@@ -107,20 +153,14 @@ body {
   text-decoration: none;
 }
 
-.login-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-      120deg,
-      transparent,
-      rgba(255, 255, 255, 0.3),
-      transparent
-  );
-  transition: 0.5s;
+.user-icon {
+  font-size: 24px;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.user-icon:hover {
+  color: var(--primary-color);
 }
 
 .login-btn:hover {
@@ -129,37 +169,148 @@ body {
   background: linear-gradient(45deg, #FE5D00, #F8B622);
 }
 
-.login-btn:hover::before {
-  animation: shine 1.5s infinite;
+/* navbar.css */
+/* ... Garder les styles de base jusqu'à .login-btn ... */
+
+.user-profile {
+  position: relative;
 }
 
-.login-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(254, 93, 0, 0.4);
+.profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes shine {
-  100% {
-      left: 200%;
+.user-icon {
+  font-size: 24px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 15px);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  min-width: 250px;
+  z-index: 1000;
+  overflow: hidden;
+  transform-origin: top right;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.profile-dropdown.show {
+  display: block;
+  animation: dropdownFadeIn 0.3s ease forwards;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.logo-collectionr {
-  height: 75px; // Augmenter la hauteur
-  width: auto; // Maintenir le ratio d'aspect
-  padding-left: 75px;
+.profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: transform 0.2s ease;
 }
 
-.logo {
-  transition: all 0.3s ease;
+.profile-btn:hover {
+  transform: scale(1.1);
 }
 
-.logo:hover {
-  transform: scale(1.05) rotate(5deg);
-  filter: brightness(1.1);
+.profile-dropdown a {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.2s ease;
+  position: relative;
+  font-weight: 500;
 }
 
+.profile-dropdown a:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
 
-.logo:hover img {
-  filter: drop-shadow(0 2px 4px rgba(254, 93, 0, 0.3));
+.profile-dropdown a:hover {
+  background: linear-gradient(45deg, rgba(248, 182, 34, 0.1), rgba(254, 93, 0, 0.1));
+  color: #FE5D00;
+  padding-left: 25px;
+}
+
+.profile-dropdown i {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  font-size: 1.1em;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.profile-dropdown a:hover i {
+  color: #FE5D00;
+}
+
+/* Flèche du dropdown */
+.profile-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Style spécial pour le bouton de déconnexion */
+.profile-dropdown a:last-child {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.profile-dropdown a:last-child:hover {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.profile-dropdown a:last-child i {
+  color: #dc3545;
+}
+
+/* Effet de hover sur les liens */
+.profile-dropdown a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(45deg, #F8B622, #FE5D00);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+}
+
+.profile-dropdown a:hover::after {
+  transform: scaleY(1);
 }
