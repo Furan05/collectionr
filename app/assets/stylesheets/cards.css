@@ -142,3 +142,47 @@
 .search-input:focus {
   border-color: var(--secondary-color); /* Change la couleur de focus */
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2rem;
+}
+
+.next a{
+  background: var(--secondary-color);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.prev a{
+  background: var(--secondary-color);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.page a {
+  color: var(--secondary-color);
+  padding: 10px 15px;
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.page a:hover {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.current {
+  background: var(--secondary-color);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-top: -10px;
+}

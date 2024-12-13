@@ -3,7 +3,6 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  background: #f8f9fa;
 }
 
 .card-inf {
@@ -37,6 +36,7 @@
   margin-bottom: 30px;
   color: #2c3e50;
   font-weight: 700;
+  padding-left: 30px;
 }
 
 .stats-grid {
@@ -47,15 +47,17 @@
 }
 
 .stat-item {
-  background: #f8f9fa;
+  background: #fff;
   padding: 20px;
   border-radius: 15px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition-duration: 300ms;
+  border: 1px solid #e3e3e3;
 }
 
 .stat-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border: 1px solid #f8c473;
 }
 
 .stat-item h3 {

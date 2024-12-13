@@ -8,8 +8,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
 }
+
+::selection {
+  background: #ffe1b0; /* Couleur de fond orange clair */
+  color: #000000; /* Couleur du texte sélectionné */
+}
+
+/* Pour les navigateurs qui ne supportent pas ::selection */
+::-moz-selection {
+  background: #ffe1b0; /* Couleur de fond orange clair */
+  color: #000000; /* Couleur du texte sélectionné */
+}
+
 
 body {
   background-color: var(--background-color);
