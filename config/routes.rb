@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'marketplace/index'
   # Devise routes with custom controllers
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -25,4 +26,7 @@ Rails.application.routes.draw do
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
+
+  resources :marketplace, only: [:index]
+
 end
