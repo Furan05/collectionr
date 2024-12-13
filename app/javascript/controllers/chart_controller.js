@@ -1,99 +1,76 @@
+// app/javascript/controllers/chart_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { priceHistory: Array }
+  static values = {
+    priceHistory: Array
+  }
 
   connect() {
-    if (typeof ApexCharts === 'undefined') {
-      console.error('ApexCharts is not loaded')
-      return
-    }
+    console.log("Chart controller connected")
+    this.initChart()
+  }
 
-    const priceData = this.priceHistoryValue
+  initChart() {
+    const ctx = this.element.getContext('2d')
 
-    if (priceData && priceData.length > 0) {
-      const options = {
-        series: [{
-          name: 'Prix',
-          data: priceData.map(item => ({
-            x: new Date(item.date).getTime(),
-            y: item.price
-          }))
-        }],
-        chart: {
-          type: 'area',
-          height: 250,
-          toolbar: {
-            show: false
-          },
-          animations: {
-            enabled: true,
-            easing: 'easeinout',
-            speed: 800
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: this.priceHistoryValue.map(item => item.date),
+        datasets: [{
+          label: 'Prix de la carte (€)',
+          data: this.priceHistoryValue.map(item => item.price),
+          borderColor: '#f8c471',
+          backgroundColor: 'rgba(248, 196, 113, 0.1)',
+          borderWidth: 2,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0,
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: '#f8c471',
+          pointHoverBorderColor: '#fff',
+          pointHoverBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
           }
         },
-        colors: ['#f8c471'],
-        fill: {
-          type: 'gradient',
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.7,
-            opacityTo: 0.2,
-            stops: [0, 100]
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          curve: 'smooth',
-          width: 2
-        },
-        grid: {
-          borderColor: '#e0e0e0',
-          strokeDashArray: 5,
-          xaxis: {
-            lines: {
-              show: false
-            }
-          }
-        },
-        xaxis: {
-          type: 'datetime',
-          labels: {
-            style: {
-              colors: '#666',
-              fontSize: '12px'
-            }
-          }
-        },
-        yaxis: {
-          labels: {
-            formatter: function(val) {
-              return val.toFixed(2) + "€"
-            },
-            style: {
-              colors: '#666',
-              fontSize: '12px'
-            }
-          }
-        },
-        tooltip: {
-          x: {
-            format: 'dd MMM yyyy'
-          },
+        scales: {
           y: {
-            formatter: function(val) {
-              return val.toFixed(2) + "€"
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              font: {
+                size: 12
+              }
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              font: {
+                size: 12
+              },
+              maxTicksLimit: 6,
+              maxRotation: 0
             }
           }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index'
         }
       }
-
-      const chart = new ApexCharts(this.element, options)
-      chart.render()
-    } else {
-      this.element.insertAdjacentHTML('afterend', '<p>Aucune donnée de prix disponible</p>')
-    }
+    })
   }
 }
