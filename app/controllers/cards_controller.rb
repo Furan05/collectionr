@@ -11,7 +11,7 @@ def index
   @cards = @cards.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
 
   # Paginate with 24 cards per page
-  @cards = @cards.page(params[:page]).per(24)
+  @cards = @cards.page(params[:page]).per(25)
 
   respond_to do |format|
     format.html

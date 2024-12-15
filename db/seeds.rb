@@ -77,6 +77,7 @@ begin
       tcg_id: card.id,
       image: card.images.small,
       set: card.set.name
+      types: card.types
     )
     print "." # Progress indicator
   end
