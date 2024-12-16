@@ -1,21 +1,181 @@
-<div class="container-home">
-  <section class="hero">
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
     <div class="hero-content">
-      <h1>Une plateforme de collectionneur<br>
-        pour les collectionneur</h1>
-      <p>Découvrez notre plateforme de collectionneurs, conçue par des passionnés pour les passionnés. Vendez, achetez et échangez !</p>
-      <p class="subtitle">Suivez en temps réel les valeurs de chaque carte !</p>
+      <h1 class="hero-title">
+        <span class="gradient-text">Collect</span>
+        <span class="typing-text" data-controller="typing"
+          data-typing-words-value='["Trade", "Discover", "Share"]'>
+        </span>
+      </h1>
+      <p class="hero-subtitle">Your next-generation Pokémon card collection platform</p>
+      <div class="cta-buttons">
+        <%= link_to "Start the adventure", new_user_registration_path, class: "primary-btn" %>
+        <%= link_to "Discover cards", cards_path, class: "secondary-btn" %>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number" data-controller="counter" data-counter-target="20000">0</span>
+          <span class="stat-label">Collectors</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-controller="counter" data-counter-target="150000">0</span>
+          <span class="stat-label">Cards traded</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number" data-controller="counter" data-counter-target="1500">0</span>
+          <span class="stat-label">Collections</span>
+        </div>
+      </div>
     </div>
     <div class="hero-image">
-      <img src="https://lannetech.com/client/admin/img/675c20ce25770.png" alt="Collection de cartes">
+      <div class="floating-cards">
+        <img src="https://images.pokemontcg.io/base1/58.png" alt="Pokemon Card" class="card-1">
+        <img src="https://images.pokemontcg.io/neo1/17.png" alt="Pokemon Card" class="card-2">
+        <img src="https://images.pokemontcg.io/base1/58.png" alt="Pokemon Card" class="card-3">
+      </div>
     </div>
   </section>
-  <section class="features">
-    <div class="feature-card">
-      <h2>Visualisez votre collection</h2>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">Why choose us?</h2>
+    <div class="features-grid">
+      <div class="feature-card" data-controller="tilt">
+        <i class="fas fa-chart-line feature-icon"></i>
+        <h3>Real-time tracking</h3>
+        <p>Monitor your collection's value and market trends</p>
+      </div>
+      <div class="feature-card" data-controller="tilt">
+        <i class="fas fa-shield-alt feature-icon"></i>
+        <h3>Secure trading</h3>
+        <p>Secure trading system with satisfaction guarantee</p>
+      </div>
+      <div class="feature-card" data-controller="tilt">
+        <i class="fas fa-users feature-icon"></i>
+        <h3>Active community</h3>
+        <p>Join a passionate community of collectors</p>
+      </div>
+      <div class="feature-card" data-controller="tilt">
+        <i class="fas fa-qrcode feature-icon"></i>
+        <h3>Smart scanning</h3>
+        <p>Scan your cards to add them instantly</p>
+      </div>
     </div>
-    <div class="feature-card">
-      <h2>Trouvez les cartes qu'il vous manque</h2>
+  </section>
+
+  <section class="market-trends">
+    <h2 class="section-title">Today's Hot Cards</h2>
+    <div class="trends-container">
+      <div class="trend-card">
+        <div class="card-image">
+          <img src="https://i.ebayimg.com/images/g/s-8AAOSwNX1hfqA3/s-l1200.jpg" alt="Charizard VMAX">
+          <div class="trend-badge hot">Hot 🔥</div>
+        </div>
+        <div class="trend-info">
+          <h4>Charizard VMAX</h4>
+          <p class="card-set">Sword & Shield</p>
+          <div class="trend-stats">
+            <span class="price-change positive">
+              <i class="fas fa-arrow-up"></i>
+              12.5%
+            </span>
+            <span class="trades-volume">238 trades today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="card-image">
+          <img src="https://pokemoms.fr/wp-content/uploads/2022/12/113_264_mew_v_pokemoms.jpg" alt="Mew V">
+          <div class="trend-badge trending">Trending ⚡</div>
+        </div>
+        <div class="trend-info">
+          <h4>Mew V</h4>
+          <p class="card-set">Scarlet & Violet</p>
+          <div class="trend-stats">
+            <span class="price-change positive">
+              <i class="fas fa-arrow-up"></i>
+              8.3%
+            </span>
+            <span class="trades-volume">186 trades today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="card-image">
+          <img src="https://assets.pokemon.com/static-assets/content-assets/cms2-fr-fr/img/cards/web/SWSH4/SWSH4_FR_188.png" alt="Pikachu VMAX">
+          <div class="trend-badge new">New Release 🌟</div>
+        </div>
+        <div class="trend-info">
+          <h4>Pikachu VMAX</h4>
+          <p class="card-set">Crown Zenith</p>
+          <div class="trend-stats">
+            <span class="price-change negative">
+              <i class="fas fa-arrow-down"></i>
+              3.2%
+            </span>
+            <span class="trades-volume">145 trades today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="trend-card">
+        <div class="card-image">
+          <img src="https://static.pkmcards.fr/cards/fr/pgo/image-cartes-a-collectionner-pokemon-card-game-tcg-pkmcards-pgo-fr-030-epee-et-bouclier-pokemon-go-mewtwo-v.webp" alt="Mewtwo V">
+          <div class="trend-badge hot">Hot 🔥</div>
+        </div>
+        <div class="trend-info">
+          <h4>Mewtwo V</h4>
+          <p class="card-set">Scarlet & Violet</p>
+          <div class="trend-stats">
+            <span class="price-change positive">
+              <i class="fas fa-arrow-up"></i>
+              15.7%
+            </span>
+            <span class="trades-volume">212 trades today</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="community-section">
+    <div class="community-content">
+      <h2 class="section-title">Join the community</h2>
+      <p class="community-description">
+        Connect with thousands of collectors, participate in events,
+        and stay informed about the latest releases.
+      </p>
+      <div class="community-grid">
+        <div class="community-stat">
+          <i class="fas fa-users"></i>
+          <span class="stat-count">20K+</span>
+          <span class="stat-label">Active members</span>
+        </div>
+        <div class="community-stat">
+          <i class="fas fa-comments"></i>
+          <span class="stat-count">50K+</span>
+          <span class="stat-label">Discussions</span>
+        </div>
+        <div class="community-stat">
+          <i class="fas fa-handshake"></i>
+          <span class="stat-count">100K+</span>
+          <span class="stat-label">Trades</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to start your collection?</h2>
+      <p>Join us today and start collecting</p>
+      <%= link_to "Create an account", new_user_registration_path, class: "cta-button" %>
+    </div>
+    <div class="cta-background"></div>
   </section>
 </div>

@@ -61,69 +61,234 @@
 
     <div id="activity" class="tab-content" data-onglet-target="content">
       <div class="content-section">
-        <h3>Recent Additions</h3>
+        <div class="activity-header">
+          <h3>Recent Activity</h3>
+        </div>
+
         <div class="recent-cards">
           <% @recent_cards.each do |card| %>
             <div class="card-preview">
               <img src="<%= card.image %>" alt="<%= card.name %>">
               <div class="card-info">
-                <h4><%= card.name %></h4>
+                <div class="card-header">
+                  <h4><%= card.name %></h4>
+                  <span class="card-type <%= card.tcg %>"><%= card.tcg.capitalize %></span>
+                </div>
                 <p><%= card.set %></p>
-                <span class="timestamp">Added <%= time_ago_in_words(card.created_at) %> ago</span>
+                <div class="card-metadata">
+                  <span class="timestamp">
+                    <i class="far fa-clock"></i>
+                    Added <%= time_ago_in_words(card.created_at) %> ago
+                  </span>
+                  <span class="completion-status">
+                    <i class="fas fa-layer-group"></i>
+                    Set completion: <%= ((current_user.cards.where(set: card.set).count.to_f / Card.where(set: card.set).count) * 100).round %>%
+                  </span>
+                  <span class="collection-info">
+                    <i class="fas fa-folder"></i>
+                    Added to <%= Collection.find(CollectionType.find_by(card: card)&.collection_id).title rescue "Unknown Collection" %>
+                  </span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <% if current_user.favorites.exists?(card_id: card.id) %>
+                  <i class="fas fa-heart favorite-icon"></i>
+                <% end %>
+                <div class="price-indicator">
+                  <span class="current-price">€<%= rand(10.0..100.0).round(2) %></span>
+                  <% change = rand(-5.0..5.0).round(2) %>
+                  <span class="price-change <%= change >= 0 ? 'positive' : 'negative' %>">
+                    <i class="fas fa-<%= change >= 0 ? 'caret-up' : 'caret-down' %>"></i>
+                    <%= change.abs %>%
+                  </span>
+                </div>
               </div>
             </div>
           <% end %>
+
+          <% @favorite_cards.last(3).each do |card| %>
+            <div class="card-preview favorite-activity">
+              <img src="<%= card.image %>" alt="<%= card.name %>">
+              <div class="card-info">
+                <div class="card-header">
+                  <h4><%= card.name %></h4>
+                  <span class="activity-type">Added to favorites</span>
+                </div>
+                <p><%= card.set %></p>
+                <div class="card-metadata">
+                  <span class="timestamp">
+                    <i class="far fa-clock"></i>
+                    <%= time_ago_in_words(current_user.favorites.find_by(card: card).created_at) %> ago
+                  </span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <i class="fas fa-heart favorite-icon active"></i>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="view-more">
+          <button class="view-more-btn">View More Activity</button>
         </div>
       </div>
     </div>
 
     <div id="collections" class="tab-content hidden" data-onglet-target="content">
       <div class="content-section">
-        <div class="section-header">
-          <h3>Sets Progress</h3>
-        </div>
-        <div class="sets-grid">
-          <% @sets_progress.each do |set| %>
-            <div class="set-overview">
-              <div class="set-info">
-                <h4><%= set[:name] %></h4>
-                <div class="set-stats">
-                  <span class="count"><%= set[:owned] %>/<%= set[:total] %> cards</span>
-                  <div class="completion">
-                    <div class="completion-bar" style="width: <%= set[:progress] %>%"></div>
+        <div class="collections-grid">
+          <!-- Section Pokemon -->
+          <div class="tcg-section">
+            <h3>
+              <i class="fas fa-gamepad"></i>
+              Pokemon Collections
+            </h3>
+            <div class="set-cards">
+              <% pokemon_collections = current_user.collections.where(tcg: "pokemon") %>
+              <% if pokemon_collections.any? %>
+                <% pokemon_collections.each do |collection| %>
+                  <% total_in_set = Card.where(set: collection.title).count %>
+                  <% owned_cards = collection.cards.count %>
+                  <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
+
+                  <div class="set-card">
+                    <div class="set-image">
+                      <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
+                    </div>
+                    <div class="set-info">
+                      <h4><%= collection.title %></h4>
+                      <p><%= owned_cards %>/<%= total_in_set %> cards collected</p>
+                      <div class="set-stats">
+                        <div class="progress-bar">
+                          <div class="progress" style="width: <%= progress %>%"></div>
+                        </div>
+                        <span class="percentage"><%= progress %>%</span>
+                      </div>
+                      <p class="release-date">Released: <%= collection.release_date&.strftime("%B %Y") %></p>
+                    </div>
                   </div>
-                  <span class="percentage"><%= set[:progress] %>%</span>
+                <% end %>
+              <% else %>
+                <div class="empty-state">
+                  <i class="fas fa-box-open"></i>
+                  <p>No Pokemon collections yet</p>
                 </div>
-              </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
+
+          <!-- Section Yu-Gi-Oh -->
+          <div class="tcg-section">
+            <h3>
+              <i class="fas fa-dragon"></i>
+              Yu-Gi-Oh Collections
+            </h3>
+            <div class="set-cards">
+              <% yugioh_collections = current_user.collections.where(tcg: "yugiho") %>
+              <% if yugioh_collections.any? %>
+                <% yugioh_collections.each do |collection| %>
+                  <% total_in_set = Card.where(set: collection.title).count %>
+                  <% owned_cards = collection.cards.count %>
+                  <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
+
+                  <div class="set-card">
+                    <div class="set-image">
+                      <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
+                    </div>
+                    <div class="set-info">
+                      <h4><%= collection.title %></h4>
+                      <p><%= owned_cards %>/<%= total_in_set %> cards collected</p>
+                      <div class="set-stats">
+                        <div class="progress-bar">
+                          <div class="progress" style="width: <%= progress %>%"></div>
+                        </div>
+                        <span class="percentage"><%= progress %>%</span>
+                      </div>
+                      <p class="release-date">Released: <%= collection.release_date&.strftime("%B %Y") %></p>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="empty-state">
+                  <i class="fas fa-box-open"></i>
+                  <p>No Yu-Gi-Oh collections yet</p>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div id="favorites" class="tab-content hidden" data-onglet-target="content">
       <div class="content-section">
-        <h3>Favorite Cards</h3>
-        <div class="favorites-grid">
+        <div class="activity-header">
+          <h3>Favorite Cards</h3>
+          <div class="activity-filters">
+            <span class="active">All</span>
+            <span>Pokemon</span>
+            <span>Yu-Gi-Oh</span>
+          </div>
+        </div>
+
+        <div class="recent-cards">
           <% @favorite_cards.each do |card| %>
-            <div class="favorite-card">
-              <div class="favorite-actions">
-                <%= button_to card_favorite_path(card),
-                    method: :delete,
-                    class: "remove-favorite",
-                    form: { data: { turbo_confirm: "Remove from favorites?" } } do %>
-                  <i class="fas fa-heart"></i>
-                <% end %>
-              </div>
+            <div class="card-preview">
               <img src="<%= card.image %>" alt="<%= card.name %>">
               <div class="card-info">
-                <h4><%= card.name %></h4>
+                <div class="card-header">
+                  <h4><%= card.name %></h4>
+                  <span class="card-type <%= card.tcg %>"><%= card.tcg.capitalize %></span>
+                </div>
                 <p><%= card.set %></p>
+                <div class="card-metadata">
+                  <span class="timestamp">
+                    <i class="far fa-clock"></i>
+                    Added to favorites <%= time_ago_in_words(current_user.favorites.find_by(card: card).created_at) %> ago
+                  </span>
+                  <span class="completion-status">
+                    <i class="fas fa-layer-group"></i>
+                    Set completion: <%= ((current_user.cards.where(set: card.set).count.to_f / Card.where(set: card.set).count) * 100).round %>%
+                  </span>
+                  <% if collection = Collection.joins(:cards).where(cards: { id: card.id }, user: current_user).first %>
+                    <span class="collection-info">
+                      <i class="fas fa-folder"></i>
+                      Found in <%= collection.title %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <%= button_to card_favorite_path(card_id: card.id),
+                    method: :delete,
+                    class: "remove-btn",
+                    form: { data: { turbo_confirm: "Remove from favorites?" } } do %>
+                  <i class="fas fa-times"></i>
+                <% end %>
+                <div class="price-indicator">
+                  <% price = rand(10.0..100.0).round(2) %>
+                  <% change = rand(-5.0..5.0).round(2) %>
+                  <span class="current-price">€<%= price %></span>
+                  <span class="price-change <%= change >= 0 ? 'positive' : 'negative' %>">
+                    <i class="fas fa-<%= change >= 0 ? 'caret-up' : 'caret-down' %>"></i>
+                    <%= change.abs %>%
+                  </span>
+                </div>
               </div>
             </div>
           <% end %>
         </div>
+
+        <% if @favorite_cards.empty? %>
+          <div class="empty-state">
+            <i class="fas fa-heart"></i>
+            <p>No favorite cards yet</p>
+          </div>
+        <% end %>
       </div>
     </div>
+
   </div>
 </div>
