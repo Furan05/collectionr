@@ -35,3 +35,4 @@ application.register("slider", SliderController)
 
 import CounterController from "./counter_controller"
 application.register("counter", CounterController)
+

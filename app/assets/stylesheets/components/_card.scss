@@ -3,8 +3,6 @@
   position: relative;
 
   &.not-owned {
-    filter: grayscale(100%);
-    opacity: 0.7;
     transform: none;
 
     .add-card-btn {
