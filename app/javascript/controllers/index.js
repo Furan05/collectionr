@@ -26,3 +26,12 @@ application.register("hello", HelloController)
 
 import OngletController from "./onglet_controller"
 application.register("onglet", OngletController)
+
+import TypingController from "./typing_controller"
+application.register("typing", TypingController)
+
+import SliderController from "./slider_controller"
+application.register("slider", SliderController)
+
+import CounterController from "./counter_controller"
+application.register("counter", CounterController)

@@ -161,51 +161,168 @@
   }
 }
 
-.recent-cards {
-  display: grid;
+// Nouveaux styles pour la section Recent Activity
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.activity-filters {
+  display: flex;
   gap: 1rem;
+
+  span {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f1f1f1;
+    }
+
+    &.active {
+      background: #FF8F3F;
+      color: white;
+    }
+  }
 }
 
 .card-preview {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 8px;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
   transition: transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 
   &:hover {
-    transform: translateX(4px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   img {
-    width: 80px;
-    height: 112px;
+    width: 90px;
+    height: 126px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 8px;
   }
+}
 
-  .card-info {
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+
+  .card-type {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    &.pokemon {
+      background: #ffebee;
+      color: #e53935;
+    }
+
+    &.yugiho {
+      background: #e8f5e9;
+      color: #43a047;
+    }
+  }
+}
+
+.card-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+
+  span {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
 
-    h4 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    p {
-      color: #6c757d;
-      font-size: 0.875rem;
-    }
-
-    .timestamp {
-      font-size: 0.75rem;
-      color: #b2bec3;
-      margin-top: 0.5rem;
+    i {
+      font-size: 0.9rem;
+      width: 16px;
     }
   }
+}
+
+.card-actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.price-indicator {
+  text-align: right;
+
+  .current-price {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3436;
+  }
+
+  .price-change {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    &.positive { color: #2ecc71; }
+    &.negative { color: #e74c3c; }
+  }
+}
+
+.favorite-icon {
+  color: #e74c3c;
+  font-size: 1.25rem;
+
+  &.active {
+    animation: pulse 0.3s ease;
+  }
+}
+
+.view-more {
+  text-align: center;
+  margin-top: 2rem;
+
+  .view-more-btn {
+    background: none;
+    border: 2px solid #FF8F3F;
+    color: #FF8F3F;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #FF8F3F;
+      color: white;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 .section-header {
@@ -422,5 +539,239 @@
 
   &:hover {
     color: #2d3436;
+  }
+}
+
+
+// Ajouter à la fin du fichier _profile.scss existant
+
+.favorite-card-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  .card-image {
+    width: 80px;
+    height: 112px;
+    margin-right: 1.5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+  }
+
+  .card-details {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-info {
+    h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      color: #6c757d;
+      font-size: 0.875rem;
+    }
+  }
+
+  .price-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .price {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .price-change {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+
+      &.positive {
+        color: #2ecc71;
+      }
+
+      &.negative {
+        color: #e74c3c;
+      }
+
+      i {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Ajouter à la fin du fichier _profile.scss
+
+.collections-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.tcg-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+  h3 {
+    font-size: 1.25rem;
+    color: #2d3436;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f1f1f1;
+  }
+}
+
+.set-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.set-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .set-image {
+    width: 100%;
+    height: 120px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .set-info {
+    padding: 1rem;
+
+    h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #2d3436;
+    }
+
+    .set-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.75rem;
+
+      .progress-bar {
+        flex: 1;
+        height: 6px;
+        background: #e9ecef;
+        border-radius: 3px;
+        overflow: hidden;
+
+        .progress {
+          height: 100%;
+          background: linear-gradient(to right, #FF8F3F, #ffc400);
+          border-radius: 3px;
+          transition: width 0.3s ease;
+        }
+      }
+
+      .percentage {
+        font-size: 0.875rem;
+        color: #FF8F3F;
+        font-weight: 600;
+      }
+    }
+
+    .release-date {
+      font-size: 0.75rem;
+      color: #6c757d;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+
+  i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    color: #c0392b;
+  }
+}
+
+.card-actions {
+  .price-indicator {
+    margin-top: 1rem;
   }
 }
