@@ -4,6 +4,7 @@ class CardsController < ApplicationController
 def index
   @cards = Card.all
 
+  params[:tcg] = "pokemon" if params[:tcg].nil?
   # Filter by TCG type
   @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
 
