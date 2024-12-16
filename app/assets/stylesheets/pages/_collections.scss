@@ -163,6 +163,7 @@
       .card-info {
         opacity: 0.8;
         filter: grayscale(100%);
+        pointer-events: none;
       }
 
       &:hover {
@@ -171,6 +172,7 @@
         .favorite-btn,
         .add-card-btn  {
           opacity: 1;
+
           transition: opacity 0.3s ease;
         }
       }
