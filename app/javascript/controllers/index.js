@@ -26,5 +26,4 @@ application.register("hello", HelloController)
 
 import OngletController from "./onglet_controller"
 application.register("onglet", OngletController)
-import VanillaController from "./vanilla_controller"
-application.register("vanilla", VanillaController)
+

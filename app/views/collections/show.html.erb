@@ -1,18 +1,25 @@
 <main class="show-collection">
+<div class="collection-header">
+  <img class="collection-logo" src="<%= @collection.image_url%>" alt="">
   <h1 class="collection-title"><%= @collection.title %></h1>
-  <div class="collection-stats">
-    <% total_cards = @set_cards.count %>
-    <% owned_cards = @set_cards.count { |card| CollectionType.exists?(collection_id: @collection.id, card_id: card.id) } %>
-    <p>Cards owned: <%= owned_cards %>/<%= total_cards %></p>
   </div>
+  <div class="collection-stats">
+     <% total_cards = @set_cards.count %>
+    <% owned_cards = @set_cards.count { |card| CollectionType.exists?(collection_id: @collection.id, card_id: card.id) } %>
+  <div class="stat-card">
+    <i class="fas fa-crown stat-icon"></i>
+    <div class="stat-value">Cards owned: <%= owned_cards %>/<%= total_cards %></div>
+  </div>
+</div>
   <div class="cards-grid" data-controller="card-collection">
     <% @set_cards.each do |card| %>
       <%= turbo_frame_tag dom_id(card) do %>
-        <div class="card-item <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>"
+        <div class="card-item  <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>" data-tilt data-tilt-glare data-tilt-max-glare="0.8""
      data-card-collection-target="card"
      data-card-id="<%= card.id %>"
-     data-collection-id="<%= @collection.id %>">
-
+     data-collection-id="<%= @collection.id %>"
+     >
+<div></div>
   <div class="favorite-btn">
     <% if current_user.favorites.exists?(card_id: card.id) %>
       <%= button_to card_favorite_path(card_id: card.id),
@@ -53,7 +60,7 @@
         }
     %>
   <% end %>
-          <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+          <div class="card-image">
             <img src="<%= card.image %>" alt="<%= card.name %>">
           </div>
         </div>
