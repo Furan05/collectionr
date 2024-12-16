@@ -4,6 +4,7 @@ class CardsController < ApplicationController
 def index
   @cards = Card.all
 
+  params[:tcg] = "pokemon" if params[:tcg].nil?
   # Filter by TCG type
   @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
 
@@ -11,7 +12,7 @@ def index
   @cards = @cards.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
 
   # Paginate with 24 cards per page
-  @cards = @cards.page(params[:page]).per(24)
+  @cards = @cards.page(params[:page]).per(25)
 
   respond_to do |format|
     format.html

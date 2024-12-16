@@ -2,7 +2,7 @@
 :root {
   --primary-color: #ffffff;
   --secondary-color: #f8c471;
-  --secondary-gradient: linear-gradient(to right, #f8c471, #f5b041);
+  --secondary-gradient: #f8c471;
 }
 
 .cards-page {
@@ -53,22 +53,27 @@
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 25px;
   padding: 20px 0;
 }
 
-.card-item {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+/* .card-item {
+  background-color: white;
+    border-radius: 20px;
+    box-shadow:
+        -15px -15px 30px rgba(255, 255, 255, 0.05),
+        15px 15px 30px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 10px rgba(0, 0, 0, 0.1),
+        inset 5px 5px 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+} */
 
 .card-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
 }
 
 .card-link {
@@ -76,12 +81,23 @@
   color: inherit;
 }
 
-.card-image {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.card-item {
+  padding-bottom: 20px;
+  .card-image {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+    }
+  }
 }
 
 .card-image img {
@@ -92,28 +108,33 @@
 .card-name {
   text-align: center;
   padding: 15px;
-  background: linear-gradient(to right, #f8c471, #f5b041);
+  background: var(--secondary-gradient);
   color: white;
   font-weight: 500;
 }
 
 .tabs {
   display: flex;
-  justify-content: center; /* Centre les tabs */
-  gap: 40px; /* Plus d'espace entre les tabs */
+  justify-content: space-between;
   margin: 2rem auto;
   border-bottom: 1px solid #e2e2e2;
-  padding-bottom: 10px;
-  max-width: 600px; /* Limite la largeur pour un meilleur aspect */
+  max-width: 1000px; /* Limite la largeur pour un meilleur aspect */
+  position: relative;
 }
 
 .tab {
   text-decoration: none;
   color: #666;
+  padding: 8px 0;
   font-size: 1.1rem;
   padding: 8px 16px;
+  width: 50%;
+  text-align: center;
   transition: color 0.3s ease;
   position: relative;
+  display: flex;
+  justify-content: center; /* Center flex content */
+  align-items: center;
 }
 
 .tab.active {
@@ -124,19 +145,11 @@
 .tab.active::after {
   content: '';
   position: absolute;
-  bottom: -11px;
+  bottom: 0 !important;
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: var(--secondary-color); /* Utilise la couleur secondaire */
-}
-
-.card-name {
-  text-align: center;
-  padding: 15px;
-  background: var(--secondary-gradient); /* Utilise le dégradé secondaire */
-  color: white;
-  font-weight: 500;
+  background: #FF8F3F;
 }
 
 .search-input:focus {

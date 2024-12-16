@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_12_153835) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_15_123233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_12_153835) do
     t.string "tcg_id"
     t.string "image"
     t.string "set"
+    t.string "subtypes"
+    t.string "types"
   end
 
   create_table "collection_types", force: :cascade do |t|

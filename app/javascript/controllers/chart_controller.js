@@ -22,7 +22,7 @@ export default class extends Controller {
           label: 'Prix de la carte (€)',
           data: this.priceHistoryValue.map(item => item.price),
           borderColor: '#f8c471',
-          backgroundColor: 'rgba(248, 196, 113, 0.1)',
+          backgroundColor: 'rgba(253, 218, 161, 0.1)',
           borderWidth: 2,
           tension: 0.4,
           fill: true,
