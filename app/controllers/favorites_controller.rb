@@ -15,7 +15,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     @card = Card.find(params[:card_id])
-    @collection = CollectionType.find_by(card_id: @card.id)&.collection
+    @collection = Collection.find_by(user_id: current_user.id, title: @card.set)
     @favorite = current_user.favorites.find_by(card_id: params[:card_id])
 
     if @favorite&.destroy
@@ -31,6 +31,12 @@ class FavoritesController < ApplicationController
             }
           )
         }
+        format.html { redirect_back(fallback_location: root_path) }
+      end
+    else
+      # Ajout d'une réponse pour le cas d'échec
+      respond_to do |format|
+        format.turbo_stream { head :unprocessable_entity }
         format.html { redirect_back(fallback_location: root_path) }
       end
     end
