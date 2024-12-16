@@ -20,7 +20,6 @@
         </canvas>
       </div>
 
-
       <div class="stats-grid">
         <% if @card.tcg == "pokemon" %>
           <div class="stat-item">
@@ -67,17 +66,7 @@
         <% end %>
       </div>
 
-      <% if @card.tcg == "pokemon" && @card_info["attacks"] %>
-        <div class="attacks">
-          <h3><i class='bx bx-bolt-circle' ></i> Attacks</h3>
-          <% @card_info["attacks"].each do |attack| %>
-            <div class="attack">
-              <h4><%= attack["name"] %></h4>
-              <p><%= attack["text"] %></p>
-            </div>
-          <% end %>
-        </div>
-      <% elsif @card.tcg == "yugiho" %>
+      <% if @card.tcg == "yugiho" %>
         <div class="description">
           <h3>Description</h3>
           <p><%= @card_info["desc"] %></p>
