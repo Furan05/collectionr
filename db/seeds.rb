@@ -230,4 +230,23 @@ else
   puts "Failed to fetch YuGiOh sets data: #{sets_response.code}"
 end
 
+# Créer une liste d'offre random entre 1 à 10 par User
+User.all.each do |user|
+  rand(0..7).times do
+    card = Card.all.sample
+      Offer.create!(
+        title: card.name,
+        price: rand(1..1000),
+        condition: Offer::CONDITION.sample,
+        graduation: Offer::GRADUATE.sample,
+        langue: ['English', 'French', 'Japanese'].sample,
+        image_url: card.image,
+        user_id: user.id,
+        card_id: card.id
+      )
+  end
+  puts "Created #{user.offers.count} offers for #{user.first_name}"
+end
+
+
 puts "\nSeeding completed!"
