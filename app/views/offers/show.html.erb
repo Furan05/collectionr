@@ -1,8 +1,81 @@
-<img src="<%= @offer.image_url %>" alt="">
-<%= link_to "Edit", edit_offer_path(@offer) %>
-<%# fait moi un lien vers destroy %>
-<%= link_to "Destroy",
-    offer_path(@offer),
-    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
 
+<div class="offer-detail-container">
+  <div class="offer-content">
+    <!-- Section gauche avec l'image -->
+    <div class="offer-image-section">
+      <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+        <img src="<%= @offer.image_url %>" alt="<%= @offer.title %>">
+      </div>
+
+      <div class="seller-info">
+        <div class="seller-profile">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= @offer.user.id %>" alt="Seller Avatar" class="seller-avatar">
+          <div class="seller-details">
+            <h3><%= @offer.user.first_name %> <%= @offer.user.last_name %></h3>
+            <span class="member-since">Membre depuis <%= @offer.user.created_at.strftime("%B %Y") %></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boutons d'administration (visibles seulement pour le propriétaire) -->
+      <% if current_user == @offer.user %>
+        <div class="admin-buttons">
+          <%= link_to edit_offer_path(@offer), class: "edit-button" do %>
+            <i class="fas fa-edit"></i> Modifier
+          <% end %>
+
+          <%= link_to offer_path(@offer),
+              class: "delete-button",
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette offre ?"
+              } do %>
+            <i class="fas fa-trash"></i> Supprimer
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Section droite avec les détails -->
+    <div class="offer-details">
+      <h1><%= @offer.title %></h1>
+
+      <div class="offer-stats">
+        <div class="price-tag">
+          <span class="amount"><%= @offer.price %>€</span>
+        </div>
+
+        <div class="offer-info-grid">
+          <div class="info-item">
+            <span class="label">État</span>
+            <span class="value"><%= @offer.condition %></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Langue</span>
+            <span class="value"><%= @offer.langue %></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Grade</span>
+            <span class="value"><%= @offer.graduation ? "#{@offer.graduation}/10" : "Non gradée" %></span>
+          </div>
+        </div>
+
+        <% if @offer.bio.present? %>
+          <div class="offer-description">
+            <h3>Description</h3>
+            <p><%= @offer.bio %></p>
+          </div>
+        <% end %>
+
+        <!-- Boutons d'action (visibles seulement si l'utilisateur n'est pas le propriétaire) -->
+        <% if current_user != @offer.user %>
+          <div class="action-buttons">
+            <button class="buy-button">Acheter maintenant</button>
+            <button class="contact-button">Contacter le vendeur</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
