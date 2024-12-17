@@ -1,112 +1,40 @@
-<!-- Main Content -->
-<main class="main-content">
-  <h1 class="section-title">Nos offres du moment</h1>
-  <div class="search-container">
-    <input type="text" class="search-input" placeholder="Offre cartes ?">
-  </div>
-  <div class="cards-grid">
-    <% @offers.each do |offer| %>
-      <div class="card-wrapper">
-        <div class="card">
-          <div class="card-image">
-            <%= link_to offer_path(offer) do %>
-              <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
-            <% end %>
-          </div>
-          <div class="card-info">
-            <div class="card-title">
-              <h3><%= offer.title %></h3>
-              <span class="price"><%= offer.price %> $</span>
+<div class="offers-page">
+  <div class="main-content">
+    <h1 class="section-title">Nos offres du moment</h1>
+
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Rechercher une offre ?">
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <% @offers.each do |offer| %>
+        <div class="card-wrapper">
+          <div class="card">
+            <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+              <%= link_to offer_path(offer) do %>
+                <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
+              <% end %>
             </div>
-            <button class="buy-btn">Acheter</button>
+            <div class="card-info">
+              <div class="card-header">
+                <h3 class="card-title"><%= offer.title %></h3>
+                <div class="card-meta">
+                  <span class="extension"><%= offer.card.set %></span>
+                  <span class="condition"><%= offer.condition %></span>
+                  <span class="language"><%= offer.langue %></span>
+                </div>
+              </div>
+              <div class="card-price">
+                <span class="price"><%= offer.price %>€</span>
+                <button class="buy-btn">Acheter</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</main>
-<style>
-  /* Main Content */
-  .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
-  .section-title {
-    text-align: center;
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 2rem;
-  }
-
-  .search-container {
-    max-width: 600px;
-    margin: 0 auto 2rem;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 1rem;
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
-  }
-
-  .card-wrapper {
-    background: white;
-    border-radius: 15px;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
-
-  .card-wrapper:hover {
-    transform: translateY(-5px);
-  }
-
-  .card-image img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .card-info {
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .card-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .price {
-    color: #ff7f50;
-    font-weight: bold;
-  }
-
-  .buy-btn {
-    width: 100%;
-    padding: 0.8rem;
-    background: #ff7f50;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .buy-btn:hover {
-    background: #ff6b3d;
-  }
-</style>
+</div>
