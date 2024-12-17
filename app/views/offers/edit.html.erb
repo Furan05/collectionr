@@ -1,7 +1,19 @@
-<div class="offer-show">
-  <%= render 'form', offer: @offer %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Edit Your Offer</h2>
 
-  <div class="form-links">
-    <%= link_to "Back to Offers", offers_path, class: "back-link" %>
+          <%= render 'form', offer: @offer %>
+
+          <div class="text-center mt-4">
+            <%= link_to offers_path, class: "btn btn-outline-secondary" do %>
+              <i class="fas fa-arrow-left me-2"></i>Retour aux offres
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
