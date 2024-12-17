@@ -6,14 +6,23 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :pays, presence: true
+  validates :city, presence: true
+  validates :address, presence: true
+  validates :postal_code, presence: true
 
   has_many :collections
   has_many :collection_types, through: :collections
   has_many :cards, through: :collection_types
+
   has_many :favorites, dependent: :destroy
   has_many :favorite_cards, through: :favorites, source: :card
+
   has_many :offers, dependent: :destroy
   has_many :cards_offered, through: :offers, source: :card
+
+  has_many :achats, dependent: :destroy
+  has_many :purchased_offers, through: :achats, source: :offer
 
   def total_cards_count
     collection_types.count

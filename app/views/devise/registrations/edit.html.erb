@@ -8,6 +8,18 @@
     <%= f.input :last_name,
               required: true %>
     <%= f.input :email, required: true, autofocus: true %>
+
+    <div class="address-section">
+      <h3>Address Information</h3>
+      <%= f.input :pays,
+                required: true %>
+      <%= f.input :city,
+                required: true %>
+      <%= f.input :address,
+                required: true %>
+      <%= f.input :postal_code,
+                required: true %>
+    </div>
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
