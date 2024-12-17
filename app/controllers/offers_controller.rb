@@ -28,7 +28,7 @@ class OffersController < ApplicationController
   def update
     @offer = Offer.find(params[:id])
     @offer.update(offer_params)
- 
+
     redirect_to @offer
   end
 
@@ -42,7 +42,8 @@ class OffersController < ApplicationController
   private
 
   def offer_params
-    params.require(:offer).permit(:title, :description, :price, :location)
+    params.require(:offer).permit(:title, :price, :condition, :bio, :langue, :graduation, :image_url)
   end
+
 
 end
