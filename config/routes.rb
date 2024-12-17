@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :favorites, only: [:create, :destroy]
   end
 
+  resources :offers
+
   # Collection routes
   resources :collections do
     resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }
