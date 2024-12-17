@@ -12,13 +12,19 @@ class OffersController < ApplicationController
   end
 
   def create
-    @offer = Offer.new(offer_params)
+    # Méthode création Alexis
+    @offer = current_user.offers.build(offer_params)
 
-    if @offer.save
-      redirect_to @offer
+    if current_user.collection_types.exists?(card_id: @offer.card_id)
+      if @offer.save
+        redirect_to @offer, notice: 'Offer was successfully created.'
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new
+      redirect_to root_path, alert: 'You can only create offers for cards you own!'
     end
+    # Fin méthode création Alexis
   end
 
   def edit
@@ -28,7 +34,7 @@ class OffersController < ApplicationController
   def update
     @offer = Offer.find(params[:id])
     @offer.update(offer_params)
- 
+
     redirect_to @offer
   end
 

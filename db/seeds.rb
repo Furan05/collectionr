@@ -13,15 +13,19 @@ User.destroy_all
 puts "Users destroyed"
 
 puts "Create User"
-User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456")
+User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456", pays: "France", city: "Paris", address: "1 rue de Paris", postal_code: "75000")
 10.times do
   user = User.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email,
-    password: "password"
+    password: "password",
+    pays: Faker::Address.country,
+    city: Faker::Address.city,
+    address: Faker::Address.street_address,
+    postal_code: Faker::Address.zip_code
   )
-  puts "Created user: #{user.first_name}"
+  puts "Created user: #{user.first_name} #{user.city}"
 end
 
 # Création des cartes
@@ -148,6 +152,8 @@ end
 
 puts "Created #{Collection.count} collections for #{User.count} users!"
 
+
+
 puts "Creating YuGiOh collections and cards..."
 
 # YuGiOh sets data
@@ -230,20 +236,42 @@ else
   puts "Failed to fetch YuGiOh sets data: #{sets_response.code}"
 end
 
-# Créer une liste d'offre random entre 1 à 10 par User
+puts "Adding cards to collections..."
 User.all.each do |user|
-  rand(0..7).times do
-    card = Card.all.sample
-      Offer.create!(
-        title: card.name,
-        price: rand(1..1000),
-        condition: Offer::CONDITION.sample,
-        graduation: Offer::GRADUATE.sample,
-        langue: ['English', 'French', 'Japanese'].sample,
-        image_url: card.image,
-        user_id: user.id,
-        card_id: card.id
+  user.collections.each do |collection|
+    total_set_cards = Card.where(set: collection.title).count
+    # Add random number of cards between 5 and total set cards
+    rand(5..total_set_cards).times do
+      card = Card.where(set: collection.title).sample
+      CollectionType.create!(
+        collection_id: collection.id,
+        card_id: card.id,
+        tcg: card.tcg # or collection.tcg
       )
+    end
+    puts "Added #{collection.cards.count} cards to #{collection.title}"
+  end
+end
+
+# Créer une liste d'offre random entre 1 à 10 par User
+puts "\nCreating offers..."
+User.all.each do |user|
+  owned_cards = user.cards.distinct
+
+  rand(0..7).times do
+    card = owned_cards.sample
+    next unless card
+
+    Offer.create!(
+      title: card.name,
+      price: rand(1..1000),
+      condition: Offer::CONDITION.sample,
+      graduation: Offer::GRADUATE.sample,
+      langue: ['English', 'French', 'Japanese'].sample,
+      image_url: card.image,
+      user_id: user.id,
+      card_id: card.id
+    )
   end
   puts "Created #{user.offers.count} offers for #{user.first_name}"
 end

@@ -57,6 +57,12 @@
          data-action="click->onglet#switch">
         Favorites
       </a>
+      <a href="#offers"
+         class="tab"
+         data-onglet-target="tab"
+         data-action="click->onglet#switch">
+        Offers
+      </a>
     </div>
 
     <div id="activity" class="tab-content" data-onglet-target="content">
@@ -288,6 +294,47 @@
           </div>
         <% end %>
       </div>
+    </div>
+<div id="offers" class="tab-content" data-onglet-target="content">
+  <div class="activity-section">
+    <h3 class="section-title">My Offers</h3>
+    <div class="activity-grid">
+      <% current_user.offers.each do |offer| %>
+        <div class="card-preview">
+          <div class="card-thumbnail">
+            <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h4><%= offer.title %></h4>
+              <span class="card-type"><%= offer.condition %></span>
+            </div>
+            <div class="card-metadata">
+              <span class="timestamp">
+                <i class="far fa-clock"></i>
+                Posted <%= time_ago_in_words(offer.created_at) %> ago
+              </span>
+              <span class="price-info">
+                <i class="fas fa-tag"></i>
+                <%= humanized_money_with_symbol(offer.price) %>
+              </span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <%= link_to edit_offer_path(offer), class: "action-btn edit" do %>
+              <i class="fas fa-edit control-offer"></i>
+            <% end %>
+            <%= link_to offer_path(offer),
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                class: "action-btn delete" do %>
+              <i class="fas fa-trash control-offer"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
     </div>
 
   </div>

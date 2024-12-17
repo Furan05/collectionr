@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   resources :offers
 
+  resources :achats, only: [:show, :create]
+
   # Collection routes
   resources :collections do
     resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }

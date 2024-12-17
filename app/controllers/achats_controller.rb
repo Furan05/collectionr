@@ -1,0 +1,2 @@
+class AchatsController < ApplicationController
+end
