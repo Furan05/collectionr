@@ -22,8 +22,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_17_084748) do
     t.string "tcg_id"
     t.string "image"
     t.string "set"
-    t.string "subtypes"
-    t.string "types"
   end
 
   create_table "collection_types", force: :cascade do |t|
