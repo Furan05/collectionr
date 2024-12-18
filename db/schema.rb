@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_18_110041) do
+
+ActiveRecord::Schema[7.1].define(version: 2024_12_18_113220) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +40,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_18_110041) do
     t.string "subtypes"
     t.string "types"
     t.string "set_logo"
+    t.integer "estimated_price_cents", default: 0, null: false
+    t.datetime "price_updated_at"
+    t.index ["price_updated_at"], name: "index_cards_on_price_updated_at"
+
   end
 
   create_table "collection_types", force: :cascade do |t|

@@ -34,19 +34,24 @@ class OffersController < ApplicationController
   end
 
   def create
-    # Méthode création Alexis
-    @offer = current_user.offers.build(offer_params)
+    @offer = current_user.offers.new(offer_params.except(:image_url))
 
-    if current_user.collection_types.exists?(card_id: @offer.card_id)
-      if @offer.save
-        redirect_to @offer, notice: 'Offer was successfully created.'
-      else
-        render :new, status: :unprocessable_entity
-      end
-    else
-      redirect_to root_path, alert: 'You can only create offers for cards you own!'
+    if params[:offer][:image_url].present?
+      image_path = params[:offer][:image_url].tempfile.path
+      image_url = upload_image(image_path)
+      @offer.image_url = image_url if image_url
     end
-    # Fin méthode création Alexis
+
+    if @offer.save
+      redirect_to @offer, notice: 'Offer was successfully created.'
+    else
+      # Ensure you're always redirecting or rendering
+      render :new, status: :unprocessable_entity
+    end
+  rescue => e
+    # Add error logging
+    Rails.logger.error "Offer creation failed: #{e.message}"
+    render :new, status: :unprocessable_entity
   end
 
   def edit
@@ -74,26 +79,21 @@ class OffersController < ApplicationController
   end
 
   def upload_image(image_path)
-    begin
-      base64_image = Base64.strict_encode64(File.open(image_path, 'rb').read)
-      full_base64 = "data:image/png;base64,#{base64_image}"
+    base64_image = Base64.strict_encode64(File.open(image_path, 'rb').read)
+    full_base64 = "data:image/png;base64,#{base64_image}"
 
-      response = HTTParty.post('https://lannetech.com/api/upload.php',
-          body: { image: full_base64 }.to_json,
-          headers: {
-              'Content-Type' => 'application/json',
-              'Accept' => 'application/json'
-          }
-      )
+    response = HTTParty.post('https://lannetech.com/api/upload.php',
+        body: { image: full_base64 }.to_json,
+        headers: {
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        }
+    )
 
-      if response.success? && response.parsed_response['success']
-        response.parsed_response['url']
-      else
-        Rails.logger.error "Image upload failed: #{response.body}"
-        nil
-      end
-    rescue => e
-      Rails.logger.error "Image upload error: #{e.message}"
+    # Vérifiez si la réponse est un succès et extrait uniquement l'URL
+    if response.success? && response.parsed_response['success']
+      response.parsed_response['url'] # Retourne juste l'URL
+    else
       nil
     end
   end

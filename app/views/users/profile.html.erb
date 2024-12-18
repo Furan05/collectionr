@@ -22,6 +22,20 @@
         </div>
       </div>
     </div>
+    <div class="stat">
+      <div class="quick-stats">
+      <div class="completion-rate">
+          <span class="stat-value">
+        <div class="completion-header">
+        <span class="stat-label">Collection Value</span>
+        <%= number_to_currency(current_user.collection_value, precision: 2, unit: "€") %>
+      </span>
+      </div>
+    </div>
+
+        </div>
+
+    </div>
     <div class="quick-stats">
       <div class="completion-rate">
         <div class="completion-header">
