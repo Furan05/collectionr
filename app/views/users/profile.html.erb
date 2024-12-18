@@ -7,7 +7,6 @@
       </div>
       <h2><%= current_user.first_name %> <%= current_user.last_name %></h2>
       <p class="user-handle">@<%= current_user.email.split('@').first %></p>
-
       <div class="user-stats">
         <div class="stat">
           <span class="stat-value"><%= @total_cards %></span>
@@ -23,7 +22,6 @@
         </div>
       </div>
     </div>
-
     <div class="quick-stats">
       <div class="completion-rate">
         <div class="completion-header">
@@ -36,7 +34,6 @@
       </div>
     </div>
   </div>
-
   <div class="profile-main">
     <div class="content-tabs" data-controller="onglet">
       <a href="#activity"
@@ -64,13 +61,11 @@
         Offers
       </a>
     </div>
-
     <div id="activity" class="tab-content" data-onglet-target="content">
       <div class="content-section">
         <div class="activity-header">
           <h3>Recent Activity</h3>
         </div>
-
         <div class="recent-cards">
           <% @recent_cards.each do |card| %>
             <div class="card-preview">
@@ -111,7 +106,6 @@
               </div>
             </div>
           <% end %>
-
           <% @favorite_cards.last(3).each do |card| %>
             <div class="card-preview favorite-activity">
               <img src="<%= card.image %>" alt="<%= card.name %>">
@@ -134,13 +128,11 @@
             </div>
           <% end %>
         </div>
-
         <div class="view-more">
           <button class="view-more-btn">View More Activity</button>
         </div>
       </div>
     </div>
-
     <div id="collections" class="tab-content hidden" data-onglet-target="content">
       <div class="content-section">
         <div class="collections-grid">
@@ -157,7 +149,6 @@
                   <% total_in_set = Card.where(set: collection.title).count %>
                   <% owned_cards = collection.cards.count %>
                   <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
-
                   <div class="set-card">
                     <div class="set-image">
                       <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
@@ -183,7 +174,6 @@
               <% end %>
             </div>
           </div>
-
           <!-- Section Yu-Gi-Oh -->
           <div class="tcg-section">
             <h3>
@@ -197,7 +187,6 @@
                   <% total_in_set = Card.where(set: collection.title).count %>
                   <% owned_cards = collection.cards.count %>
                   <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
-
                   <div class="set-card">
                     <div class="set-image">
                       <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
@@ -226,7 +215,6 @@
         </div>
       </div>
     </div>
-
     <div id="favorites" class="tab-content hidden" data-onglet-target="content">
       <div class="content-section">
         <div class="activity-header">
@@ -237,7 +225,6 @@
             <span>Yu-Gi-Oh</span>
           </div>
         </div>
-
         <div class="recent-cards">
           <% @favorite_cards.each do |card| %>
             <div class="card-preview">
@@ -265,7 +252,6 @@
                   <% end %>
                 </div>
               </div>
-
               <div class="card-actions">
                 <%= button_to card_favorite_path(card_id: card.id),
                     method: :delete,
@@ -286,7 +272,6 @@
             </div>
           <% end %>
         </div>
-
         <% if @favorite_cards.empty? %>
           <div class="empty-state">
             <i class="fas fa-heart"></i>
@@ -295,47 +280,53 @@
         <% end %>
       </div>
     </div>
-<div id="offers" class="tab-content" data-onglet-target="content">
-  <div class="activity-section">
-    <h3 class="section-title">My Offers</h3>
-    <div class="activity-grid">
-      <% current_user.offers.each do |offer| %>
-        <div class="card-preview">
-          <div class="card-thumbnail">
-            <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
-          </div>
-          <div class="card-content">
-            <div class="card-header">
-              <h4><%= offer.title %></h4>
-              <span class="card-type"><%= offer.condition %></span>
-            </div>
-            <div class="card-metadata">
-              <span class="timestamp">
-                <i class="far fa-clock"></i>
-                Posted <%= time_ago_in_words(offer.created_at) %> ago
-              </span>
-              <span class="price-info">
-                <i class="fas fa-tag"></i>
-                <%= humanized_money_with_symbol(offer.price) %>
-              </span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <%= link_to edit_offer_path(offer), class: "action-btn edit" do %>
-              <i class="fas fa-edit control-offer"></i>
-            <% end %>
-            <%= link_to offer_path(offer),
+    <div id="offers" class="tab-content" data-onglet-target="content">
+      <div class="activity-section">
+        <h3 class="section-title">My Offers</h3>
+        <div class="activity-grid">
+          <% current_user.offers.each do |offer| %>
+            <div class="card-preview">
+              <div class="card-thumbnail">
+                <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
+                <div class="status-badge <%= offer.etat ? 'active' : 'inactive' %>">
+                  <%= offer.etat ? 'Disponible' : 'Vendu' %>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <h4><%= offer.title %></h4>
+                  <span class="condition-badge <%= offer.condition.downcase.gsub(' ', '-') %>">
+                    <%= offer.condition %>
+                  </span>
+                </div>
+                <div class="card-metadata">
+                  <span class="timestamp">
+                    <i class="far fa-clock"></i>
+                    Posted <%= time_ago_in_words(offer.created_at) %> ago
+                  </span>
+                  <span class="price-info">
+                    <i class="fas fa-tag"></i>
+                    <%= humanized_money_with_symbol(offer.price) %>
+                  </span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <% if offer.etat %>
+                  <%= link_to edit_offer_path(offer), class: "action-btn edit" do %>
+                    <i class="fas fa-edit control-offer"></i>
+                  <% end %>
+                  <%= link_to offer_path(offer),
                 data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
                 class: "action-btn delete" do %>
-              <i class="fas fa-trash control-offer"></i>
-            <% end %>
-          </div>
+                    <i class="fas fa-trash control-offer"></i>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
-    </div>
-
-  </div>
 </div>

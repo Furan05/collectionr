@@ -74,6 +74,7 @@
 .card-wrapper {
   width: 100%;
   max-width: 280px;
+  height: 100%;
   background: white;
   border-radius: var(--border-radius);
   padding: 1rem;
@@ -85,7 +86,7 @@
   }
 }
 
-.card {
+.card-market {
   .card-image {
     margin-bottom: 1rem;
     border-radius: 10px;
@@ -93,7 +94,7 @@
 
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.3s ease;
 
@@ -107,7 +108,30 @@
     padding: 0.5rem;
   }
 
-  .card-header {
+  .card-header-with-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+      flex: 1;
+    }
+
+    .set-logo {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+  }
+
+  .card-header-market {
     margin-bottom: 1rem;
   }
 
@@ -124,10 +148,45 @@
     font-size: 0.9rem;
     color: #666;
 
-    span {
+    .language {
       background: var(--light-bg);
+      border: 1px solid #ddd;
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
+    }
+
+    .condition {
+      padding: 0.2rem 0.5rem;
+          border-radius: 4px;
+      &.mint {
+        background-color: rgba(76, 175, 80, 0.2);
+        color: #2e7d32;
+        border: 1px solid #4CAF50;
+      }
+
+      &.near-mint {
+        background-color: rgba(139, 195, 74, 0.2);
+        color: #558b2f;
+        border: 1px solid #8BC34A;
+      }
+
+      &.good {
+        background-color: rgba(255, 193, 7, 0.2);
+        color: #f57f17;
+        border: 1px solid #FFC107;
+      }
+
+      &.played {
+        background-color: rgba(255, 152, 0, 0.2);
+        color: #e65100;
+        border: 1px solid #FF9800;
+      }
+
+      &.poor {
+        background-color: rgba(244, 67, 54, 0.2);
+        color: #d32f2f;
+        border: 1px solid #f44336;
+      }
     }
   }
 
@@ -159,6 +218,8 @@
     }
   }
 }
+
+
 
 /* Styles pour la page show des offres */
 .offer-detail-container {
