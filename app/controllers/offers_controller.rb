@@ -12,24 +12,19 @@ class OffersController < ApplicationController
   end
 
   def create
-    @offer = current_user.offers.new(offer_params.except(:image_url))
+    # Méthode création Alexis
+    @offer = current_user.offers.build(offer_params)
 
-    if params[:offer][:image_url].present?
-      image_path = params[:offer][:image_url].tempfile.path
-      image_url = upload_image(image_path)
-      @offer.image_url = image_url if image_url
-    end
-
-    if @offer.save
-      redirect_to @offer, notice: 'Offer was successfully created.'
+    if current_user.collection_types.exists?(card_id: @offer.card_id)
+      if @offer.save
+        redirect_to @offer, notice: 'Offer was successfully created.'
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      # Ensure you're always redirecting or rendering
-      render :new, status: :unprocessable_entity
+      redirect_to root_path, alert: 'You can only create offers for cards you own!'
     end
-  rescue => e
-    # Add error logging
-    Rails.logger.error "Offer creation failed: #{e.message}"
-    render :new, status: :unprocessable_entity
+    # Fin méthode création Alexis
   end
 
   def edit

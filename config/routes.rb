@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
   get 'marketplace/index'
   # Devise routes with custom controllers
   devise_for :users, controllers: {
@@ -20,6 +21,10 @@ Rails.application.routes.draw do
   end
 
   resources :offers
+
+  resources :achats, only: [:show, :create] do
+    resources :payements, only: [:new]
+  end
 
   # Collection routes
   resources :collections do

@@ -7,15 +7,6 @@
         <img src="<%= @offer.image_url %>" alt="<%= @offer.title %>">
       </div>
 
-      <div class="seller-info">
-        <div class="seller-profile">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= @offer.user.id %>" alt="Seller Avatar" class="seller-avatar">
-          <div class="seller-details">
-            <h3><%= @offer.user.first_name %> <%= @offer.user.last_name %></h3>
-            <span class="member-since">Membre depuis <%= @offer.user.created_at.strftime("%B %Y") %></span>
-          </div>
-        </div>
-      </div>
 
       <!-- Boutons d'administration (visibles seulement pour le propriétaire) -->
       <% if current_user == @offer.user %>
@@ -47,11 +38,11 @@
 
         <div class="offer-info-grid">
           <div class="info-item">
-            <span class="label">État</span>
+            <span class="label">Condition</span>
             <span class="value"><%= @offer.condition %></span>
           </div>
           <div class="info-item">
-            <span class="label">Langue</span>
+            <span class="label">Language</span>
             <span class="value"><%= @offer.langue %></span>
           </div>
           <div class="info-item">
@@ -59,6 +50,16 @@
             <span class="value"><%= @offer.graduation ? "#{@offer.graduation}/10" : "Non gradée" %></span>
           </div>
         </div>
+
+       <div class="seller-info">
+        <div class="seller-profile">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= @offer.user.id %>" alt="Seller Avatar" class="seller-avatar">
+          <div class="seller-details">
+            <h3><%= @offer.user.first_name %> <%= @offer.user.last_name %></h3>
+            <span class="member-since">Membre depuis <%= @offer.user.created_at.strftime("%B %Y") %></span>
+          </div>
+        </div>
+      </div>
 
         <% if @offer.bio.present? %>
           <div class="offer-description">
@@ -71,11 +72,10 @@
         <% if current_user != @offer.user %>
           <div class="action-buttons">
             <button class="buy-button">Acheter maintenant</button>
-            <button class="contact-button">Contacter le vendeur</button>
+            <%# <button class="contact-button">Contacter le vendeur</button> %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-

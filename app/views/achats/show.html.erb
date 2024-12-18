@@ -1,0 +1,16 @@
+<!-- app/views/orders/show.html.erb -->
+<div class="container">
+  <div class="row py-4">
+    <div class="col-md-3"><%= image_tag @achat.offer.image_url, width: '100%' %></div>
+    <div class="col">
+      <h1>achat #<%= @achat.id %> <small><span class="badge badge-primary"><%= @achat.state %></span></small></h1>
+      <ul class="list-unstyled">
+        <li><strong>ISSUED ON</strong> <%= @achat.created_at.to_date %></li>
+        <li><strong>OFFER</strong> <%= @achat.offer.title %></li>
+        <li><strong>TOTAL</strong> <%= humanized_money_with_symbol @achat.amount %></li>
+        </li>
+      </ul>
+      <p>Estimated delivery in <strong>2 business days</strong></p>
+    </div>
+  </div>
+</div>

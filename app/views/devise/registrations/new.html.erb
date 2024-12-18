@@ -46,6 +46,40 @@
                       autocomplete: "new-password",
                       class: 'form-control'
                     } %>
+
+                    <div class="address-section">
+  <%= f.input :pays,
+              required: true,
+              placeholder: "Pays",
+              label: false,
+              input_html: {
+                class: 'form-control'
+              } %>
+
+  <%= f.input :city,
+              required: true,
+              placeholder: "Ville",
+              label: false,
+              input_html: {
+                class: 'form-control'
+              } %>
+
+  <%= f.input :address,
+              required: true,
+              placeholder: "Adresse",
+              label: false,
+              input_html: {
+                class: 'form-control'
+              } %>
+
+  <%= f.input :postal_code,
+              required: true,
+              placeholder: "Code Postal",
+              label: false,
+              input_html: {
+                class: 'form-control'
+              } %>
+</div>
       </div>
 
       <div class="form-actions">
