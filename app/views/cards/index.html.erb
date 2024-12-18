@@ -12,20 +12,7 @@
     <% end %>
   </div>
 
-  <div class="tabs" data-controller="tabs">
-    <%= link_to "Pokemon", "#",
-        class: "tab #{params[:tcg] == 'pokemon' || params[:tcg].nil? ? 'active' : ''}",
-        data: {
-          tab: "pokemon",
-          action: "click->tabs#switch"
-        } %>
-    <%= link_to "Yu-gi-ho", "#",
-        class: "tab #{params[:tcg] == 'yugiho' ? 'active' : ''}",
-        data: {
-          tab: "yugiho",
-          action: "click->tabs#switch"
-        } %>
-  </div>
+ <%= render 'components/tab' %>
 
   <div id="cards_list">
     <%= render "cards/list", cards: @cards %>

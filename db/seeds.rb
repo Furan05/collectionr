@@ -40,7 +40,8 @@ begin
       tcg: "pokemon",
       tcg_id: card.id,
       image: card.images.small,
-      set: card.set.name
+      set: card.set.name,
+      set_logo: card.set.images.symbol
     )
     print "." # Progress indicator
   end
@@ -60,7 +61,8 @@ begin
       tcg: "pokemon",
       tcg_id: card.id,
       image: card.images.small,
-      set: card.set.name
+      set: card.set.name,
+     set_logo: card.set.images.symbol
     )
     print "." # Progress indicator
   end
@@ -80,7 +82,8 @@ begin
       tcg: "pokemon",
       tcg_id: card.id,
       image: card.images.small,
-      set: card.set.name
+      set: card.set.name,
+     set_logo: card.set.images.symbol
     )
     print "." # Progress indicator
   end
@@ -100,7 +103,8 @@ begin
       tcg: "pokemon",
       tcg_id: card.id,
       image: card.images.small,
-      set: card.set.name
+      set: card.set.name,
+    set_logo: card.set.images.symbol
     )
     print "." # Progress indicator
   end

@@ -1,44 +1,17 @@
-<div class="offers-page">
+<div class="cards-page">
   <div class="main-content">
-    <h1 class="section-title">Nos offres du moment</h1>
+    <h1 class="main-title">Nos offres du moment</h1>
     <div class="search-container">
       <div class="search-input-wrapper">
         <i class="fas fa-search search-icon"></i>
         <input type="text" class="search-input" placeholder="Rechercher une offre ?">
       </div>
     </div>
-    <div class="cards-grid">
-      <% @offers.each do |offer| %>
-      <% if offer.etat == true %>
-        <div class="card-wrapper">
-          <div class="card">
-            <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
-              <%= link_to offer_path(offer) do %>
-                <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
-              <% end %>
-            </div>
-            <div class="card-info">
-              <div class="card-header">
-                <h3 class="card-title"><%= offer.title %></h3>
-                <div class="card-meta">
-                  <span class="extension"><%= offer.card.set %></span>
-                  <span class="condition"><%= offer.condition %></span>
-                  <span class="language"><%= offer.langue %></span>
-                </div>
-              </div>
-              <div class="card-price">
-                <span class="price"><%= offer.price %>€</span>
-                <%= form_with url: achats_path do %>
-                  <%= hidden_field_tag 'offer_id', offer.id %>
-                  <%= submit_tag 'Acheter', class: 'buy-btn' %>
-                <% end %>
-                <%# <button class="buy-btn">Acheter</button> %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <% end %>
+
+  <%= render 'components/tab' %>
+
+<div id="offers_list">
+      <%= render partial: "offers/list", locals: { offers: @offers } %>
     </div>
-  </div>
+</div>
 </div>

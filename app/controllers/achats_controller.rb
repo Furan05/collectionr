@@ -1,6 +1,9 @@
 class AchatsController < ApplicationController
   def show
     @achat = current_user.achats.find(params[:id])
+    if @achat.nil?
+      redirect_to root_path, alert: "Achat non trouvé"
+    end
   end
 
   def create

@@ -1,6 +1,28 @@
 class OffersController < ApplicationController
   def index
-    @offers = Offer.all
+    @offers = Offer.all.includes(:card)
+
+    params[:tcg] = "pokemon" if params[:tcg].nil?
+    # Filter by TCG type
+    @offers = @offers.joins(:card).where(cards: { tcg: params[:tcg] }) if params[:tcg].present?
+
+    # Then apply search if present
+    if params[:query].present?
+      @offers = @offers.joins(:card).where("cards.name ILIKE ?", "%#{params[:query]}%")
+    end
+
+    # Only show active offers
+    @offers = @offers.where(etat: true)
+
+    # Paginate with 24 offers per page
+    @offers = @offers.page(params[:page]).per(24)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("offers_list", partial: "offers/list", locals: { offers: @offers })
+      end
+    end
   end
 
   def show

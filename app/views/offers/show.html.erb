@@ -3,7 +3,7 @@
   <div class="offer-content">
     <!-- Section gauche avec l'image -->
     <div class="offer-image-section">
-      <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+      <div class="card-image">
         <img src="<%= @offer.image_url %>" alt="<%= @offer.title %>">
       </div>
 
@@ -36,6 +36,16 @@
           <span class="amount"><%= @offer.price %>€</span>
         </div>
 
+        <div class="seller-info">
+        <div class="seller-profile">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= @offer.user.id %>" alt="Seller Avatar" class="seller-avatar">
+          <div class="seller-details">
+            <h3><%= @offer.user.first_name %> <%= @offer.user.last_name %></h3>
+            <span class="member-since">Membre depuis <%= @offer.user.created_at.strftime("%B %Y") %></span>
+          </div>
+        </div>
+      </div>
+
         <div class="offer-info-grid">
           <div class="info-item">
             <span class="label">Condition</span>
@@ -51,15 +61,6 @@
           </div>
         </div>
 
-       <div class="seller-info">
-        <div class="seller-profile">
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= @offer.user.id %>" alt="Seller Avatar" class="seller-avatar">
-          <div class="seller-details">
-            <h3><%= @offer.user.first_name %> <%= @offer.user.last_name %></h3>
-            <span class="member-since">Membre depuis <%= @offer.user.created_at.strftime("%B %Y") %></span>
-          </div>
-        </div>
-      </div>
 
         <% if @offer.bio.present? %>
           <div class="offer-description">
@@ -71,8 +72,10 @@
         <!-- Boutons d'action (visibles seulement si l'utilisateur n'est pas le propriétaire) -->
         <% if current_user != @offer.user %>
           <div class="action-buttons">
-            <button class="buy-button">Acheter maintenant</button>
-            <%# <button class="contact-button">Contacter le vendeur</button> %>
+            <%= form_with url: achats_path do %>
+                  <%= hidden_field_tag 'offer_id', @offer.id %>
+                  <%= submit_tag 'Acheter Maintenant', class: 'buy-button' %>
+                <% end %>
           </div>
         <% end %>
       </div>

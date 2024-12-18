@@ -1,0 +1,36 @@
+<div class="cards-grid-market">
+  <% offers.each do |offer| %>
+    <% if offer.etat == true %>
+      <div class="card-wrapper">
+        <div class="card-market">
+          <div class="card-image-market">
+            <%= link_to offer_path(offer) do %>
+              <img src="<%= offer.image_url %>" alt="<%= offer.title %>">
+            <% end %>
+          </div>
+          <div class="card-info">
+            <div class="card-header-with-logo">
+              <h3 class="card-title"><%= offer.title %></h3>
+              <% if offer.card.tcg == "pokemon" %>
+                <img src="<%= offer.card.set_logo %>" alt="Set Logo" class="set-logo">
+              <% end %>
+            </div>
+            <div class="card-header-market">
+              <div class="card-meta">
+            <div class="card-price">
+              <span class="price"><%= humanized_money_with_symbol(offer.price) %></span>
+            </div>
+                <span class="condition <%= offer.condition.downcase.gsub(' ', '-') %>"><%= offer.condition %></span>
+                <span class="language"><%= offer.langue %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>7
+
+<div class="pagination">
+  <%= paginate offers %>
+</div>

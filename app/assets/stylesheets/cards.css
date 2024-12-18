@@ -149,7 +149,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: #FF8F3F;
+  background: linear-gradient(45deg, #FF8F3F, #F8B622);
 }
 
 .search-input:focus {
@@ -164,15 +164,20 @@
 }
 
 .next a{
-  background: var(--secondary-color);
+  background: linear-gradient(45deg, #FF8F3F, #F8B622);
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
   text-decoration: none;
 }
 
+.first,
+.last {
+  display: none;
+}
+
 .prev a{
-  background: var(--secondary-color);
+  background: linear-gradient(45deg, #FF8F3F, #F8B622);
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
@@ -180,20 +185,20 @@
 }
 
 .page a {
-  color: var(--secondary-color);
+  color: #FF8F3F;
   padding: 10px 15px;
-  border: 1px solid var(--secondary-color);
+  border: 1px solid #FF8F3F;
   border-radius: 5px;
   text-decoration: none;
 }
 
 .page a:hover {
-  background: var(--secondary-color);
+  background: linear-gradient(45deg, #FF8F3F, #F8B622);
   color: white;
 }
 
 .current {
-  background: var(--secondary-color);
+  background: linear-gradient(45deg, #FF8F3F, #F8B622);
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
