@@ -48,8 +48,31 @@ class OffersController < ApplicationController
   private
 
   def offer_params
-    params.require(:offer).permit(:title, :price, :condition, :bio, :langue, :graduation, :image_url, :etat)
+    params.require(:offer).permit(:title, :price, :condition, :bio, :langue, :graduation, :image_url, :card_id, :etat)
   end
 
+  def upload_image(image_path)
+    begin
+      base64_image = Base64.strict_encode64(File.open(image_path, 'rb').read)
+      full_base64 = "data:image/png;base64,#{base64_image}"
 
+      response = HTTParty.post('https://lannetech.com/api/upload.php',
+          body: { image: full_base64 }.to_json,
+          headers: {
+              'Content-Type' => 'application/json',
+              'Accept' => 'application/json'
+          }
+      )
+
+      if response.success? && response.parsed_response['success']
+        response.parsed_response['url']
+      else
+        Rails.logger.error "Image upload failed: #{response.body}"
+        nil
+      end
+    rescue => e
+      Rails.logger.error "Image upload error: #{e.message}"
+      nil
+    end
+  end
 end
