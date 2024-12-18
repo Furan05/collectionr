@@ -1,0 +1,29 @@
+<!-- app/views/offers/new.html.erb -->
+<div class="offer-container">
+  <div class="offer-form">
+    <h2>Create New Offer</h2>
+
+    <%= simple_form_for(@offer, multipart: true) do |f| %>
+    <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :title, required: true %>
+        <%= f.input :price, required: true %>
+        <%= f.input :condition, collection: Offer::CONDITION, required: true %>
+        <%= f.input :bio %>
+        <%= f.input :langue, collection: ['French', 'English', 'Japanese', 'German', 'Italian', 'Spanish'] %>
+        <%= f.input :graduation, collection: Offer::GRADUATE %>
+        <%= f.input :image_url, as: :file %>
+        <%= f.association :card, collection: Card.all, label_method: :name, value_method: :id, include_blank: false %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Create Offer", class: "button-shine" %>
+      </div>
+    <% end %>
+
+    <div class="form-links">
+      <%= link_to "Back to Offers", offers_path %>
+    </div>
+  </div>
+</div>
