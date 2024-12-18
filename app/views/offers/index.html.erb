@@ -9,6 +9,7 @@
     </div>
     <div class="cards-grid">
       <% @offers.each do |offer| %>
+      <% if offer.etat == true %>
         <div class="card-wrapper">
           <div class="card">
             <div class="card-image" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
@@ -36,6 +37,7 @@
             </div>
           </div>
         </div>
+      <% end %>
       <% end %>
     </div>
   </div>

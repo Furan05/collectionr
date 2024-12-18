@@ -48,7 +48,7 @@ class OffersController < ApplicationController
   private
 
   def offer_params
-    params.require(:offer).permit(:title, :price, :condition, :bio, :langue, :graduation, :image_url, :card_id)
+    params.require(:offer).permit(:title, :price, :condition, :bio, :langue, :graduation, :image_url, :card_id, :etat)
   end
 
   def upload_image(image_path)

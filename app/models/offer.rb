@@ -14,9 +14,10 @@ class Offer < ApplicationRecord
   validates :langue, presence: true
   validates :image_url, presence: true
 
-  has_many :achats, dependent: :destroy
+  has_many :achats
   has_many :users, through: :achats
 
+  validate :user_owns_card, on: :create
 
   def user_owns_card
     unless user.collection_types.exists?(card_id: card_id)
