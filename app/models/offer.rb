@@ -14,7 +14,7 @@ class Offer < ApplicationRecord
   validates :langue, presence: true
   validates :image_url, presence: true
 
-  has_many :achats, dependent: :destroy
+  has_many :achats, dependent: :nullify
   has_many :users, through: :achats
 
   validate :user_owns_card, on: :create

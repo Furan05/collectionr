@@ -149,7 +149,7 @@
     color: #666;
 
     .language {
-      background: var(--light-bg);
+      color: #2e2e2e;
       border: 1px solid #ddd;
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
@@ -254,6 +254,7 @@
   padding: 20px;
   background: var(--light-bg);
   border-radius: var(--border-radius);
+  margin-bottom: 2rem;
 
   .seller-profile {
     display: flex;
