@@ -70,8 +70,10 @@
         <!-- Boutons d'action (visibles seulement si l'utilisateur n'est pas le propriétaire) -->
         <% if current_user != @offer.user %>
           <div class="action-buttons">
-            <button class="buy-button">Acheter maintenant</button>
-            <button class="contact-button">Contacter le vendeur</button>
+            <%= form_with url: achats_path do %>
+                  <%= hidden_field_tag 'offer_id', @offer.id %>
+                  <%= submit_tag 'Acheter Maintenant', class: 'buy-button' %>
+                <% end %>
           </div>
         <% end %>
       </div>
