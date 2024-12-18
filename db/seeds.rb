@@ -2,6 +2,8 @@
 require 'faker'
 # Nettoyage de la base de données existante
 puts "Cleaning database..."
+Achat.destroy_all
+puts "Achats destroyed..."
 # Destroy in correct order - children first
 CollectionType.destroy_all
 puts "Collection Types destroyed"
