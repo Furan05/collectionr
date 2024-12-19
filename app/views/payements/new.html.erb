@@ -1,22 +1,44 @@
-<!-- app/views/payments/new.html.erb -->
-<div class="container">
-  <div class="row py-4">
-    <div class="col-md-3"><%= image_tag @achat.offer.image_url, width: '100%' %></div>
-    <div class="col">
-      <h1>Checkout summary</h1>
-      <p>Purchase of <strong><%= @achat.offer.title %></strong> for <strong><%= humanized_money_with_symbol @achat.amount %></strong></p>
-      <button id="pay" class="btn btn-primary">Pay</button>
-      <%# # Commented for the lecture, remove comments. %>
-      <script src="https://js.stripe.com/v3/"></script>
-      <script>
-        const paymentButton = document.getElementById('pay');
-        paymentButton.addEventListener('click', () => {
-          const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-          stripe.redirectToCheckout({
-            sessionId: '<%= @achat.checkout_session_id %>'
-          });
-        });
-      </script>
+<div class="purchase-container">
+  <div class="purchase-card">
+    <div class="purchase-header">
+      <h1>Checkout Summary</h1>
+    </div>
+
+    <div class="purchase-grid">
+      <div class="purchase-image">
+        <%= image_tag @achat.offer.image_url, alt: @achat.offer.title %>
+      </div>
+
+      <div class="purchase-details">
+        <div class="detail-group">
+          <h3>Item</h3>
+          <p><%= @achat.offer.title %></p>
+        </div>
+
+        <div class="purchase-amount">
+          <%= humanized_money_with_symbol @achat.amount %>
+        </div>
+
+        <div class="payment-section">
+          <div class="purchase-actions">
+            <button id="pay" class="pay-button">
+              <i class="fas fa-lock"></i> Pay Securely
+            </button>
+            <%= link_to "Back", :back, class: "back-button" %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const paymentButton = document.getElementById('pay');
+  paymentButton.addEventListener('click', () => {
+    const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+    stripe.redirectToCheckout({
+      sessionId: '<%= @achat.checkout_session_id %>'
+    });
+  });
+</script>
