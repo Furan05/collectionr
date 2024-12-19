@@ -15,7 +15,14 @@ User.destroy_all
 puts "Users destroyed"
 
 puts "Create User"
-User.create!(first_name: "Admin", last_name: "Admin", email: "admin@admin.com", password: "0123456", pays: "France", city: "Paris", address: "1 rue de Paris", postal_code: "75000")
+
+User.create!(first_name: "François", last_name: "Dubois", email: "admin@admin.com", password: "0123456", pays: "France", city: "Paris", address: "1 rue de Paris", postal_code: "75000")
+
+User.create!(first_name: "Claude", last_name: "Sonnet", email: "admin1@admin.com", password: "0123456", pays: "France", city: "Paris", address: "1 rue de Paris", postal_code: "75000")
+
+User.create!(first_name: "Enzo", last_name: "Lanne", email: "admin2@admin.com", password: "0123456", pays: "France", city: "Paris", address: "1 rue de Paris", postal_code: "75000")
+
+
 10.times do
   user = User.create!(
     first_name: Faker::Name.first_name,
