@@ -35,8 +35,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_18_113220) do
     t.string "tcg_id"
     t.string "image"
     t.string "set"
-    t.string "subtypes"
-    t.string "types"
     t.string "set_logo"
     t.integer "estimated_price_cents", default: 0, null: false
     t.datetime "price_updated_at"

@@ -4,12 +4,16 @@ class CardsController < ApplicationController
 def index
   @cards = Card.all
 
+  # Set default TCG to pokemon if none selected
   params[:tcg] = "pokemon" if params[:tcg].nil?
-  # Filter by TCG type
-  @cards = @cards.where(tcg: params[:tcg]) if params[:tcg].present?
+
+  # Filter by TCG first
+  @cards = @cards.where(tcg: params[:tcg])
 
   # Then apply search if present
-  @cards = @cards.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
+  if params[:query].present?
+    @cards = @cards.where("name ILIKE ?", "%#{params[:query]}%")
+  end
 
   # Paginate with 24 cards per page
   @cards = @cards.page(params[:page]).per(25)
@@ -17,7 +21,11 @@ def index
   respond_to do |format|
     format.html
     format.turbo_stream do
-      render turbo_stream: turbo_stream.update("cards_list", partial: "cards/list", locals: { cards: @cards })
+      render turbo_stream: turbo_stream.update(
+        "cards_list",
+        partial: "cards/list",
+        locals: { cards: @cards }
+      )
     end
   end
 end
