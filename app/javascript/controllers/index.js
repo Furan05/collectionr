@@ -36,3 +36,8 @@ application.register("slider", SliderController)
 import CounterController from "./counter_controller"
 application.register("counter", CounterController)
 
+import MultiStepFormController from "./multi_step_form_controller"
+application.register("multi-step-form", MultiStepFormController)
+
+import CardSelectorController from "./card_selector_controller"
+application.register("card-selector", CardSelectorController)
