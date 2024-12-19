@@ -1,12 +1,12 @@
 <%# app/views/cards/index.html.erb %>
 <div class="cards-page">
-  <h1 class="main-title">Nos cards du moment</h1>
+  <h1 class="main-title">Our current cards</h1>
 
   <div class="search-container">
     <%= form_with(url: cards_path, method: :get, class: "search-form") do |f| %>
       <div class="search-input-wrapper">
         <i class="fas fa-search search-icon"></i>
-        <%= f.text_field :query, placeholder: "Trouver une carte ?", class: "search-input" %>
+        <%= f.text_field :query, placeholder: "Find a card?", class: "search-input" %>
         <%= f.hidden_field :tcg, value: params[:tcg] if params[:tcg].present? %>
       </div>
     <% end %>
