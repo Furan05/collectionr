@@ -13,7 +13,7 @@ class CollectionsController < ApplicationController
       @collections = @collections.where("title ILIKE ?", "%#{params[:query]}%")
     end
 
-    # Order by release date
+
     @collections = @collections.order(release_date: :desc)
 
     # Paginate results
