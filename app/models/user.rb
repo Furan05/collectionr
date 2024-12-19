@@ -39,11 +39,11 @@ class User < ApplicationRecord
   end
 
   def collection_value
-    cards.sum(:estimated_price_cents) / 100.0
+    cards.sum(:estimated_price_cents)
   end
 
   def update_collection_prices
     CardPriceService.update_prices(cards)
   end
-  
+
 end

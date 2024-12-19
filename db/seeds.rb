@@ -43,7 +43,9 @@ begin
       tcg_id: card.id,
       image: card.images.small,
       set: card.set.name,
-      set_logo: card.set.images.symbol
+      set_logo: card.set.images.symbol,
+      estimated_price_cents: card.cardmarket.prices.average_sell_price
+
     )
     print "." # Progress indicator
   end
@@ -64,7 +66,8 @@ begin
       tcg_id: card.id,
       image: card.images.small,
       set: card.set.name,
-     set_logo: card.set.images.symbol
+      set_logo: card.set.images.symbol,
+      estimated_price_cents: card.cardmarket.prices.average_sell_price
     )
     print "." # Progress indicator
   end
@@ -85,7 +88,8 @@ begin
       tcg_id: card.id,
       image: card.images.small,
       set: card.set.name,
-     set_logo: card.set.images.symbol
+      set_logo: card.set.images.symbol,
+      estimated_price_cents: card.cardmarket.prices.average_sell_price
     )
     print "." # Progress indicator
   end
@@ -106,7 +110,8 @@ begin
       tcg_id: card.id,
       image: card.images.small,
       set: card.set.name,
-    set_logo: card.set.images.symbol
+      set_logo: card.set.images.symbol,
+      estimated_price_cents: card.cardmarket.prices.average_sell_price
     )
     print "." # Progress indicator
   end
