@@ -1,17 +1,23 @@
 <div class="cards-page">
   <div class="main-content">
-    <h1 class="main-title">Nos offres du moment</h1>
+    <h1 class="main-title">Our latest offers</h1>
     <div class="search-container">
-      <div class="search-input-wrapper">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Rechercher une offre ?">
-      </div>
+      <%= form_with(url: offers_path, method: :get, data: { turbo_frame: "offers_list" }) do |f| %>
+        <div class="search-input-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <%= f.text_field :query,
+              placeholder: "Looking for a card?",
+              class: "search-input",
+              value: params[:query] %>
+          <%= f.hidden_field :tcg, value: params[:tcg] %>
+        </div>
+      <% end %>
     </div>
 
-  <%= render 'components/tab' %>
+    <%= render 'components/tab' %>
 
-<div id="offers_list">
+    <div id="offers_list">
       <%= render partial: "offers/list", locals: { offers: @offers } %>
     </div>
-</div>
+  </div>
 </div>

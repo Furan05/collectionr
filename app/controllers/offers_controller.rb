@@ -2,13 +2,17 @@ class OffersController < ApplicationController
   def index
     @offers = Offer.all.includes(:card)
 
+    # Set default TCG to pokemon if none selected
     params[:tcg] = "pokemon" if params[:tcg].nil?
-    # Filter by TCG type
+
+    # Filter by TCG type using the card association
     @offers = @offers.joins(:card).where(cards: { tcg: params[:tcg] }) if params[:tcg].present?
 
-    # Then apply search if present
+    # Apply search if present
     if params[:query].present?
-      @offers = @offers.joins(:card).where("cards.name ILIKE ?", "%#{params[:query]}%")
+      @offers = @offers.joins(:card).where("offers.title ILIKE :query OR cards.name ILIKE :query",
+        query: "%#{params[:query]}%"
+      )
     end
 
     # Only show active offers
@@ -20,7 +24,11 @@ class OffersController < ApplicationController
     respond_to do |format|
       format.html
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update("offers_list", partial: "offers/list", locals: { offers: @offers })
+        render turbo_stream: turbo_stream.update(
+          "offers_list",
+          partial: "offers/list",
+          locals: { offers: @offers }
+        )
       end
     end
   end

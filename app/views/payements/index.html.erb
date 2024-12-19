@@ -1,0 +1,45 @@
+<div class="purchase-container">
+  <div class="purchase-card">
+    <div class="purchase-header">
+      <h1>Pending Purchases</h1>
+    </div>
+
+    <% if @achats.any? %>
+      <div class="pending-purchases">
+        <% @achats.each do |achat| %>
+          <div class="purchase-item">
+            <div class="purchase-item-grid">
+              <div class="purchase-item-image">
+                <%= image_tag achat.offer.image_url, alt: achat.offer.title %>
+              </div>
+
+              <div class="purchase-item-details">
+                <h3><%= achat.offer.title %></h3>
+                <div class="purchase-item-meta">
+                  <span class="price"><%= humanized_money_with_symbol achat.amount %></span>
+                  <span class="date">Created <%= time_ago_in_words(achat.created_at) %> ago</span>
+                </div>
+                <p class="seller">
+                  <i class="fas fa-user"></i>
+                  Seller: <%= achat.offer.user.first_name %> <%= achat.offer.user.last_name %>
+                </p>
+              </div>
+
+              <div class="purchase-item-actions">
+                <%= link_to new_achat_payement_path(achat), class: "pay-now-button" do %>
+                  <i class="fas fa-credit-card"></i> Complete Payment
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <i class="fas fa-shopping-cart"></i>
+        <p>No pending purchases found</p>
+        <%= link_to "Browse Marketplace", offers_path, class: "browse-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

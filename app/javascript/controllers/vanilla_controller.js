@@ -8,8 +8,8 @@ export default class extends Controller {
 
   initTilt() {
     VanillaTilt.init(this.element, {
-      max: 25,
-      speed: 400,
+      max: 80,
+      speed: 800,
       glare: true,
       "max-glare": 0.8
     })

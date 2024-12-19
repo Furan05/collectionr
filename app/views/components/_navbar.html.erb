@@ -30,18 +30,26 @@
             class="profile-dropdown"
           >
             <%= link_to profile_user_path(current_user), class: "dropdown-item" do %>
-              <i class="fa-solid fa-user"></i> Mon Profil
+              <i class="fa-solid fa-user"></i> User Profile
+            <% end %>
+
+            <%= link_to new_offer_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-shop"></i> Create Offer
+            <% end %>
+
+             <%= link_to payements_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-gear"></i> My Purchases
             <% end %>
 
             <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
-              <i class="fa-solid fa-gear"></i> Paramètres
+              <i class="fa-solid fa-gear"></i> Settings
             <% end %>
 
             <%= link_to destroy_user_session_path,
               data: { turbo_method: :delete },
               class: "dropdown-item dropdown-item-danger" do
             %>
-              <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+              <i class="fa-solid fa-right-from-bracket"></i> Log Out
             <% end %>
           </div>
         </div>
