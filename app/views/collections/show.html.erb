@@ -14,7 +14,7 @@
   <div class="cards-grid" data-controller="card-collection">
     <% @set_cards.each do |card| %>
       <%= turbo_frame_tag dom_id(card) do %>
-        <div class="card-item  <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>" data-tilt data-tilt-glare data-tilt-max-glare="0.8""
+        <div class="card-item  <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>" data-tilt data-tilt-glare data-tilt-max-glare="0.8"
      data-card-collection-target="card"
      data-card-id="<%= card.id %>"
      data-collection-id="<%= @collection.id %>"
