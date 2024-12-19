@@ -161,7 +161,8 @@
               <% if pokemon_collections.any? %>
                 <% pokemon_collections.each do |collection| %>
                   <% total_in_set = Card.where(set: collection.title).count %>
-                  <% owned_cards = collection.cards.count %>
+                  <%  set_cards = Card.where(tcg: collection.tcg, set: collection.title)%>
+                      <% owned_cards = set_cards.count { |card| CollectionType.exists?(collection_id: collection.id, card_id: card.id) } %>
                   <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
                   <div class="set-card">
                     <div class="set-image">
