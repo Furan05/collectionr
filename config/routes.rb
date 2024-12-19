@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     resources :payements, only: [:new]
   end
 
+  resources :payements, only: [:index]
+
   # Collection routes
   resources :collections do
     resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }
