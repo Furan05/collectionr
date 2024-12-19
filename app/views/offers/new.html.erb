@@ -1,29 +1,162 @@
-<!-- app/views/offers/new.html.erb -->
-<div class="offer-container">
-  <div class="offer-form">
-    <h2>Create New Offer</h2>
+<div class="offer-creation">
+  <div class="form-container" data-controller="multi-step-form">
+    <div class="form-header">
+      <h2>Create Your Offer</h2>
+      <p>Share your card with the community</p>
+    </div>
 
-    <%= simple_form_for(@offer, multipart: true) do |f| %>
-    <%= f.error_notification %>
+    <div class="form-steps">
+      <div class="step active" data-multi-step-form-target="stepIndicator">
+        <span class="step-number">1</span>
+        <span>Basic Info</span>
+      </div>
+      <div class="step" data-multi-step-form-target="stepIndicator">
+        <span class="step-number">2</span>
+        <span>Card Details</span>
+      </div>
+      <div class="step" data-multi-step-form-target="stepIndicator">
+        <span class="step-number">3</span>
+        <span>Images</span>
+      </div>
+    </div>
 
-      <div class="form-inputs">
-        <%= f.input :title, required: true %>
-        <%= f.input :price, required: true %>
-        <%= f.input :condition, collection: Offer::CONDITION, required: true %>
-        <%= f.input :bio %>
-        <%= f.input :langue, collection: ['French', 'English', 'Japanese', 'German', 'Italian', 'Spanish'] %>
-        <%= f.input :graduation, collection: Offer::GRADUATE %>
-        <%= f.input :image_url, as: :file %>
-        <%= f.association :card, collection: Card.all, label_method: :name, value_method: :id, include_blank: false %>
+    <%= simple_form_for(@offer) do |f| %>
+      <div class="form-body">
+        <div class="form-step active" data-multi-step-form-target="step">
+          <div class="form-group">
+            <%= f.input :title,
+                        label: 'Offer Title',
+                        placeholder: 'Give your offer a catchy title',
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+          <div class="form-group">
+            <%= f.input :price,
+                        label: 'Price',
+                        placeholder: '0.00',
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+
+          <!-- Card Selector -->
+          <div class="form-group" data-controller="card-selector">
+            <%= f.input :card_id,
+                      as: :hidden,
+                      input_html: {
+                        data: { card_selector_target: "input" }
+                      } %>
+
+            <label class="form-label">Select your card</label>
+            <div class="selected-card" data-card-selector-target="preview">
+              <p class="no-card-selected">No card selected</p>
+            </div>
+
+            <button type="button"
+                    class="select-card-btn"
+                    data-action="click->card-selector#openModal">
+              <i class="fas fa-search"></i> Select a card
+            </button>
+
+            <!-- Card Selection Modal -->
+            <div class="card-selector-modal" data-card-selector-target="modal">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3>Select a Card</h3>
+                  <button type="button"
+                          class="close-modal"
+                          data-action="click->card-selector#closeModal">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+
+                <div class="modal-search">
+                  <div class="search-input">
+                    <i class="fas fa-search"></i>
+                    <input type="text"
+                           placeholder="Search your cards..."
+                           data-card-selector-target="search"
+                           data-action="input->card-selector#filterCards">
+                  </div>
+                </div>
+
+                <div class="cards-grid" data-card-selector-target="grid">
+                  <% current_user.cards.where.not(id: current_user.offers.pluck(:card_id)).each do |card| %>
+                    <div class="card-item"
+                         data-action="click->card-selector#selectCard"
+                         data-card-id="<%= card.id %>"
+                         data-card-name="<%= card.name %>"
+                         data-card-image="<%= card.image %>"
+                         data-card-set="<%= card.set %>">
+                      <img src="<%= card.image %>" alt="<%= card.name %>">
+                      <div class="card-info">
+                        <h4><%= card.name %></h4>
+                        <p><%= card.set %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step" data-multi-step-form-target="step">
+          <div class="form-group">
+            <%= f.input :condition,
+                        collection: Offer::CONDITION,
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+          <div class="form-group">
+            <%= f.input :langue,
+                        collection: ['French', 'English', 'Japanese', 'German', 'Italian', 'Spanish'],
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+          <div class="form-group">
+            <%= f.input :graduation,
+                        collection: Offer::GRADUATE,
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+          <div class="form-group">
+            <%= f.input :bio,
+                        as: :text,
+                        placeholder: 'Describe your card...',
+                        wrapper_html: { class: 'form-group' } %>
+          </div>
+        </div>
+
+        <div class="form-step" data-multi-step-form-target="step">
+          <div class="form-group">
+            <label class="image-upload">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Drop your images here or click to browse</p>
+              <%= f.input :image_url,
+                          as: :file,
+                          label: false,
+                          wrapper_html: { class: 'form-group' } %>
+            </label>
+          </div>
+        </div>
       </div>
 
-      <div class="form-actions">
-        <%= f.button :submit, "Create Offer", class: "button-shine" %>
+      <div class="form-navigation">
+        <button type="button"
+                class="prev-btn"
+                data-multi-step-form-target="prevButton"
+                data-action="click->multi-step-form#prev">
+          Previous
+        </button>
+        <button type="button"
+                class="next-btn"
+                data-multi-step-form-target="nextButton"
+                data-action="click->multi-step-form#next">
+          Next
+        </button>
+        <%= f.button :submit,
+                     'Create Offer',
+                     class: 'submit-btn',
+                     data: {
+                       multi_step_form_target: "submitButton"
+                     },
+                     style: 'display: none;' %>
       </div>
     <% end %>
-
-    <div class="form-links">
-      <%= link_to "Back to Offers", offers_path %>
-    </div>
   </div>
 </div>
