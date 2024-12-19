@@ -25,8 +25,8 @@ export default class extends Controller {
     window.history.pushState({}, '', url)
 
     // Make the fetch request with both tcg and query parameters
-    const query = document.querySelector('input[name="query"]').value
-    fetch(`${window.location.pathname}?tcg=${tcg}&query=${query}`, {
+    // const query = document.querySelector('input[name="query"]').value
+    fetch(`${window.location.pathname}?tcg=${tcg}`, {
       headers: {
         'Accept': 'text/vnd.turbo-stream.html'
       }
