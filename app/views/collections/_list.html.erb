@@ -1,0 +1,17 @@
+<div class="sets-container">
+  <% collections.each do |collection| %>
+    <div class="set-card">
+      <p><%= collection.title %></p>
+      <%= link_to collection_path(collection) do %>
+        <img src="<%= collection.image_url %>" alt="<%= collection.title %>" class="set-logo" />
+      <% end %>
+      <p class="release-date">
+        Released: <%= collection.release_date&.strftime("%B %d, %Y") %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<div class="pagination">
+  <%= paginate collections %>
+</div>
