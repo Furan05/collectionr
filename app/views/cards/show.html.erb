@@ -17,7 +17,7 @@
       <h1><%= @card_info["name"] %></h1>
 
       <div class="price-history">
-        <h2><i class='bx bx-line-chart' ></i> Évolution du prix (30j)</h2>
+        <h2><i class='bx bx-line-chart' ></i> Price evolution (30d)</h2>
         <h2>Price History</h2>
         <canvas data-controller="chart"
               data-chart-price-history-value="<%= @price_history.to_json %>"
