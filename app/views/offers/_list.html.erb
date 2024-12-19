@@ -11,7 +11,7 @@
           <div class="card-info">
             <div class="card-header-with-logo">
               <h3 class="card-title"><%= offer.title %></h3>
-              <% if offer.card.tcg == "pokemon" %>
+              <% if offer.card.tcg == "pokemon" && offer.card.set_logo %>
                 <img src="<%= offer.card.set_logo %>" alt="Set Logo" class="set-logo">
               <% end %>
             </div>
@@ -29,7 +29,7 @@
       </div>
     <% end %>
   <% end %>
-</div>7
+</div>
 
 <div class="pagination">
   <%= paginate offers %>

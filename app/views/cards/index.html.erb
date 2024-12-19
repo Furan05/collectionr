@@ -1,6 +1,6 @@
 <%# app/views/cards/index.html.erb %>
 <div class="cards-page">
-  <h1 class="main-title">Nos cards du moment</h1>
+  <h1 class="main-title">Our current cards</h1>
 
   <div class="search-container">
     <%= form_with(url: cards_path, method: :get, data: { turbo_frame: "cards_list" }) do |f| %>

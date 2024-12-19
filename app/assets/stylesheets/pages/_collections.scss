@@ -23,12 +23,13 @@
 
 /* Conteneur principal */
 .sets-container {
-  display: flex;
+  display: grid;
   flex-wrap: wrap; /* Permet d'aller à la ligne sur les petits écrans */
   justify-content: center; /* Centre les cartes horizontalement */
   align-items: center;
-  gap: 20px; /* Espacement entre les cartes */
-  padding: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 2rem;
 }
 
 /* Style des cartes */
@@ -155,10 +156,10 @@
         display: block; // Remove white space
       }
     }
+  }
 
-    &.not-owned {
-      transform: none !important;
 
+    .not-owned {
       .card-image-show,
       .card-info {
         opacity: 0.8;
@@ -197,7 +198,6 @@
         }
       }
     }
-  }
 
   /* Card content */
   .card-image-show {

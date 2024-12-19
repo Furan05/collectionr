@@ -30,11 +30,15 @@
             class="profile-dropdown"
           >
             <%= link_to profile_user_path(current_user), class: "dropdown-item" do %>
-              <i class="fa-solid fa-user"></i> Mon Profil
+              <i class="fa-solid fa-user"></i> User Profile
+            <% end %>
+
+            <%= link_to new_offer_path, class: "dropdown-item" do %>
+              <i class="fa-solid fa-shop"></i> Create Offer
             <% end %>
 
             <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
-              <i class="fa-solid fa-gear"></i> Paramètres
+              <i class="fa-solid fa-gear"></i> Settings
             <% end %>
 
             <%= link_to destroy_user_session_path,

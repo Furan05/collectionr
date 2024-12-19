@@ -1,29 +1,7 @@
 <div class="cards-page">
   <h2 class="main-title">Pokemon Sets</h2>
-  <div class="sets-container">
-    <% @pokemon_sets.each do |set| %>
-      <div class="set-card">
-        <p><%= set.title %></p>
-        <%= link_to collection_path(set) do %>
-          <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
-        <% end %>
-        <p class="release-date">Released: <%= set.release_date if set.release_date %></p>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<div class="tcg-section">
-  <h2 class="tcg-title">Yu-Gi-Oh Sets</h2>
-  <div class="sets-container">
-    <% @yugioh_sets.each do |set| %>
-      <div class="set-card">
-        <p><%= set.title %></p>
-        <%= link_to collection_path(set) do %>
-          <img src="<%= set.image_url %>" alt="<%= set.title %>" class="set-logo" />
-        <% end %>
-        <p class="release-date">Released: <%= set.release_date.strftime("%B %d, %Y") if set.release_date %></p>
-      </div>
-    <% end %>
+   <%= render 'components/tab' %>
+   <div id="collections_list">
+    <%= render "collections/list", collections: @collections %>
   </div>
 </div>
