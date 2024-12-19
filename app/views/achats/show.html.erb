@@ -1,16 +1,41 @@
-<!-- app/views/orders/show.html.erb -->
-<div class="container">
-  <div class="row py-4">
-    <div class="col-md-3"><%= image_tag @achat.offer.image_url, width: '100%' %></div>
-    <div class="col">
-      <h1>achat #<%= @achat.id %> <small><span class="badge badge-primary"><%= @achat.state %></span></small></h1>
-      <ul class="list-unstyled">
-        <li><strong>ISSUED ON</strong> <%= @achat.created_at.to_date %></li>
-        <li><strong>OFFER</strong> <%= @achat.offer.title %></li>
-        <li><strong>TOTAL</strong> <%= humanized_money_with_symbol @achat.amount %></li>
-        </li>
-      </ul>
-      <p>Estimated delivery in <strong>2 business days</strong></p>
+<div class="purchase-container">
+  <div class="purchase-card">
+    <div class="purchase-header">
+      <h1>Purchase #<%= @achat.id %></h1>
+      <span class="purchase-status <%= @achat.state %>"><%= @achat.state.capitalize %></span>
+    </div>
+
+    <div class="purchase-grid">
+      <div class="purchase-image">
+        <%= image_tag @achat.offer.image_url, alt: @achat.offer.title %>
+      </div>
+
+      <div class="purchase-details">
+        <div class="detail-group">
+          <h3>Item</h3>
+          <p><%= @achat.offer.title %></p>
+        </div>
+
+        <div class="purchase-amount">
+          <%= humanized_money_with_symbol @achat.amount %>
+        </div>
+
+        <div class="purchase-meta">
+          <div class="meta-item">
+            <div class="label">Purchase Date</div>
+            <div class="value"><%= @achat.created_at.strftime("%B %d, %Y") %></div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Status</div>
+            <div class="value"><%= @achat.state.capitalize %></div>
+          </div>
+        </div>
+
+        <div class="estimated-delivery">
+          <i class="fas fa-truck"></i>
+          <p>Estimated delivery in <strong>2 business days</strong></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
