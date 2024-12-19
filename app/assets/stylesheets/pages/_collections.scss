@@ -155,10 +155,10 @@
         display: block; // Remove white space
       }
     }
+  }
 
-    &.not-owned {
-      transform: none !important;
 
+    .not-owned {
       .card-image-show,
       .card-info {
         opacity: 0.8;
@@ -197,7 +197,6 @@
         }
       }
     }
-  }
 
   /* Card content */
   .card-image-show {

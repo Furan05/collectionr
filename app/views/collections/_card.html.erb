@@ -1,26 +1,50 @@
-<div data-collection-id="<%= @collection.id %>"
+<turbo-frame id="card_<%= card.id%>">
+  <div data-controller="card-collection" class="show-collection">
+    <div data-collection-id="<%= @collection.id %>"
   class="card-item  <%= 'not-owned' unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>"
+     data-tilt data-tilt-glare data-tilt-max-glare="0.8"
      data-card-collection-target="card"
      data-card-id="<%= card.id %>"
      >
-    <div class="favorite-btn">
-      <% if current_user.favorites.exists?(card_id: card.id) %>
-        <%= button_to card_favorite_path(card_id: card.id),
+      <div class="favorite-btn">
+        <% if current_user.favorites.exists?(card_id: card.id) %>
+          <%= button_to card_favorite_path(card_id: card.id),
           method: :delete,
           class: "favorite-heart active",
           form: { data: { turbo: true }} do %>
-          <i class="fas fa-heart"></i>
-        <% end %>
-      <% else %>
-        <%= button_to card_favorites_path(card_id: card.id),
+            <i class="fas fa-heart"></i>
+          <% end %>
+        <% else %>
+          <%= button_to card_favorites_path(card_id: card.id),
           method: :post,
           class: "favorite-heart",
           form: { data: { turbo: true }} do %>
-          <i class="far fa-heart"></i>
+            <i class="far fa-heart"></i>
+          <% end %>
         <% end %>
+      </div>
+      <div class=".card-image-show">
+        <img src="<%= card.image %>" alt="<%= card.name %>" style="
+            <%=
+              "opacity: 0.8; filter: grayscale(100%);" unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>
+              width: 100%;
+              height: auto;
+              border-radius: 10px;
+              display: block;">
+      </div>
+      <% unless CollectionType.exists?(collection_id: @collection.id, card_id: card.id) %>
+        <%= button_to '+',
+        collection_collection_types_path(@collection),
+        params: { card_id: card.id },
+        class: 'add-card-btn',
+        form: {data: {
+            turbo_stream: true,
+            turbo_frame: dom_id(card)
+          }
+
+        }
+    %>
       <% end %>
     </div>
-    <div class=".card-image-show" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
-      <img src="<%= card.image %>" alt="<%= card.name %>">
-    </div>
   </div>
+</turbo-frame>
