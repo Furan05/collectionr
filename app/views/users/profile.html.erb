@@ -165,7 +165,9 @@
                   <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
                   <div class="set-card">
                     <div class="set-image">
+                <%= link_to collection_path(collection) do %>
                       <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
+                  <% end %>
                     </div>
                     <div class="set-info">
                       <h4><%= collection.title %></h4>
@@ -179,7 +181,8 @@
                       <p class="release-date">Released: <%= collection.release_date&.strftime("%B %Y") %></p>
                     </div>
                   </div>
-                <% end %>
+                  <% end %>
+
               <% else %>
                 <div class="empty-state">
                   <i class="fas fa-box-open"></i>
@@ -203,7 +206,9 @@
                   <% progress = total_in_set > 0 ? ((owned_cards.to_f / total_in_set) * 100).round : 0 %>
                   <div class="set-card">
                     <div class="set-image">
+                <%= link_to collection_path(collection) do %>
                       <img src="<%= collection.image_url %>" alt="<%= collection.title %>">
+                  <% end %>
                     </div>
                     <div class="set-info">
                       <h4><%= collection.title %></h4>
@@ -217,6 +222,7 @@
                       <p class="release-date">Released: <%= collection.release_date&.strftime("%B %Y") %></p>
                     </div>
                   </div>
+
                 <% end %>
               <% else %>
                 <div class="empty-state">
@@ -295,8 +301,10 @@
       </div>
     </div>
     <div id="offers" class="tab-content" data-onglet-target="content">
-      <div class="activity-section">
-        <h3 class="section-title">My Offers</h3>
+      <div class="content-section">
+        <div class="activity-header">
+          <h3>My offers</h3>
+        </div>
         <div class="activity-grid">
           <% current_user.offers.each do |offer| %>
             <div class="card-preview">
