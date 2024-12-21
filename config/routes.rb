@@ -10,12 +10,11 @@ Rails.application.routes.draw do
   # Root route
   root to: "pages#home"
 
-  # User routes
+
   resources :users, only: [] do
     get 'profile', on: :member
   end
 
-  # Card routes
   resources :cards, only: [:index, :show] do
     resources :favorites, only: [:create, :destroy]
   end
@@ -28,12 +27,10 @@ Rails.application.routes.draw do
 
   resources :payements, only: [:index]
 
-  # Collection routes
   resources :collections do
     resources :collection_types, only: [:create, :destroy], defaults: { format: :turbo_stream }
   end
 
-  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :marketplace, only: [:index]
