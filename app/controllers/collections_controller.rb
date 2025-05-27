@@ -2,13 +2,10 @@ class CollectionsController < ApplicationController
   def index
     @collections = Collection.where(user: current_user)
 
-    # Default to Pokemon if no TCG specified
     params[:tcg] = "pokemon" if params[:tcg].nil?
 
-    # Filter by TCG type
     @collections = @collections.where(tcg: params[:tcg]) if params[:tcg].present?
 
-    # Search by title if query present
     if params[:query].present?
       @collections = @collections.where("title ILIKE ?", "%#{params[:query]}%")
     end

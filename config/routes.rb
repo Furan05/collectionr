@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # Root route
   root to: "pages#home"
 
+  # Pages routes
+  get 'home', to: 'pages#home'
+
 
   resources :users, only: [] do
     get 'profile', on: :member
